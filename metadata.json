@@ -1,0 +1,6 @@
+{
+  "name": "Let's See DMC Operating System",
+  "description": "Enterprise Destination Management System (DMC ERP, CRM, Operations, Accounts & Tour Code Hub) for Let's See Tour & Travels Pvt. Ltd.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

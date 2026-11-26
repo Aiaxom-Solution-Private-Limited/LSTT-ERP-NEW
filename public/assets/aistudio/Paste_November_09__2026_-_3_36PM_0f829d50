@@ -1,0 +1,2602 @@
+# MASTER PROMPT: BUILD A COMPLETE DESTINATION MANAGEMENT SYSTEM (DMC ERP + CRM + OPERATIONS + ACCOUNTING)
+
+## Project: Let's See Tour & Travels Pvt. Ltd.
+
+Act as a world-class DMC business consultant, travel industry domain expert, enterprise software architect, product manager, financial systems architect, senior full-stack developer, and AI automation engineer.
+
+Your task is to research, design, and develop a complete **Destination Management System (DMS)** for Let's See Tour & Travels Pvt. Ltd.
+
+Website references:
+
+- Company: https://www.letsseetourandtravels.com/
+- Current travel software: https://sembark.com/
+
+The objective is to build a single, integrated software platform through which the company can manage its entire business, from the first enquiry to tour completion, supplier payments, customer collections, accounting, and final profitability.
+
+The company currently uses multiple software systems and processes to manage its operations. It wants to consolidate its business into one central platform developed specifically around its actual working model.
+
+This is not a basic travel CRM, hotel booking application, or itinerary generator.
+
+Build a complete **DMC Business Operating System** connecting:
+
+**Lead Management → Sales → Itinerary → Costing → Quotation → Client Confirmation → Advance Collection → Tour Code → Destination Operations → Supplier Bookings → Accounts → Tour Execution → Expense Management → Final Reconciliation → Profitability.**
+
+The software must be designed around the actual responsibilities of Sales, Operations, Accounts, Management, and other relevant departments.
+
+Do not begin coding blindly. First understand the business model, define the workflows and business rules, identify missing information, and then implement the system.
+
+---
+
+# PART 1: UNDERSTAND THE BUSINESS MODEL
+
+## 1.1 What is Let's See Tour & Travels?
+
+Based on its public website, Let's See positions itself as a Destination Management Company (DMC).
+
+Its business covers:
+
+**Domestic destinations**
+- Northeast India
+- Assam
+- Arunachal Pradesh
+- Meghalaya
+- Manipur
+- Mizoram
+- Nagaland
+- Tripura
+- Darjeeling
+- Sikkim
+- Dooars
+- Other Indian destinations
+
+**International destinations**
+- Bhutan
+- Nepal
+- Thailand
+- Vietnam
+- Cambodia
+- Laos
+- Indonesia
+- Kazakhstan
+- Kyrgyzstan
+- Azerbaijan
+- Georgia
+- Armenia
+- Uzbekistan
+- Other international destinations
+
+Its product categories include:
+
+- Family tours
+- Honeymoon tours
+- Corporate tours
+- Mountain tours
+- Nature tours
+- Pilgrimage tours
+- Adventure tours
+- Wildlife tours
+- Educational excursions
+- Customised tours
+- Hotel and transportation services
+
+The business operates through B2B relationships, tour packages, destination services, supplier coordination, and customised travel arrangements.
+
+Treat the website as a starting point for understanding the business, not as complete documentation of its internal operations.
+
+## 1.2 The Two Main Business Models
+
+The platform must support two major types of tour products.
+
+### Model A: Own Packages
+
+Let's See has its own predefined tour packages.
+
+Examples:
+
+- Meghalaya 5 Nights / 6 Days
+- Northeast Three States 11 Nights / 12 Days
+- Northeast Six Sisters 20 Nights / 21 Days
+- Bhutan 6 Nights / 7 Days
+- Nepal 5 Nights / 6 Days
+
+These packages may contain predefined:
+
+- Destination routes
+- Day-wise itineraries
+- Hotel categories
+- Transport requirements
+- Meals
+- Sightseeing
+- Activities
+- Inclusions and exclusions
+- Package pricing rules
+- Terms and conditions
+
+Sales should be able to select an existing package, customise it according to the client's requirements, calculate the revised price, and send the quotation.
+
+### Model B: Vendor-Provided Destination Packages
+
+Let's See also receives destination packages, itineraries, rates, and proposals from external vendors or destination suppliers.
+
+Examples:
+
+- A vendor provides a Bhutan package.
+- Another vendor provides a Thailand package.
+- A local destination partner provides a Meghalaya hotel and transportation arrangement.
+- A DMC in another country provides a complete destination package.
+
+The sales team should be able to upload or enter these packages, review the supplier information, calculate the selling price, customise the itinerary, and share it with the client.
+
+The system must preserve the original supplier cost and prevent it from being confused with the selling price.
+
+### Model C: Hybrid Packages
+
+A single tour can combine:
+
+- Let's See's own hotel contracts.
+- Let's See's own transport fleet.
+- External hotel suppliers.
+- External transport vendors.
+- Local guides.
+- Activities from third-party suppliers.
+- Packages from external DMCs.
+- Services independently contracted by Let's See.
+
+The software must support mixed sourcing at the individual service/component level.
+
+**Critical business rule:** Do not assume an entire tour belongs to one supplier just because one vendor provided the original itinerary.
+
+Every service component must have its own source, cost, supplier, booking status, and payment requirement.
+
+---
+
+# PART 2: CORE SYSTEM ARCHITECTURE
+
+Develop the application as a unified platform with the following major modules.
+
+1. Executive Dashboard
+2. CRM and Lead Management
+3. B2B Agent and Client Management
+4. Sales Management
+5. Package and Product Management
+6. Itinerary Builder
+7. Supplier and Vendor Management
+8. Contract and Rate Management
+9. Tour Costing and Pricing Engine
+10. Quotation and Proposal Management
+11. Booking and Confirmation Management
+12. Tour Code Management
+13. Destination Operations
+14. Hotel Booking Management
+15. Transportation Management
+16. Activity and Guide Management
+17. Tour Movement Calendar
+18. Accounts and Finance
+19. Customer Collection Management
+20. Supplier Payment Management
+21. Expense and Purchase Management
+22. Invoice and Voucher Generation
+23. Guest and Traveller Management
+24. Document and Visa Management
+25. Tour Execution and Ground Operations
+26. Tour Closure and Reconciliation
+27. Profitability and MIS Reports
+28. HR and Team Management
+29. Notifications and Automation
+30. AI Business Assistant
+31. Administration, Permissions and Audit Logs
+
+All modules must operate from the same central database and share the same tour, enquiry, client, supplier, booking, and financial references.
+
+---
+
+# PART 3: THE MOST IMPORTANT CONCEPT — UNIQUE TOUR CODE
+
+## 3.1 Every Confirmed Tour Must Have a Unique Tour Code
+
+Every confirmed tour must receive a unique, permanent Tour Code.
+
+Example:
+
+`LST-2026-00001`
+
+`LST-2026-00002`
+
+`LST-2026-00003`
+
+The format must be configurable.
+
+The Tour Code becomes the central reference for every department.
+
+Once an employee enters or selects a Tour Code, the system should retrieve all information associated with that tour.
+
+This includes:
+
+- Client or B2B agent.
+- Actual traveller/customer information.
+- Salesperson.
+- Destination.
+- Package name.
+- Itinerary.
+- Travel dates.
+- Guest count.
+- Room requirements.
+- Quotation and revisions.
+- Selling price.
+- Customer advances.
+- Customer outstanding amount.
+- Supplier details.
+- Hotel reservations.
+- Transport arrangements.
+- Vehicle allocation.
+- Guide and activity bookings.
+- Supplier advances.
+- Supplier outstanding amounts.
+- Internal expenses.
+- Vouchers.
+- Operational instructions.
+- Destination-wise team assignments.
+- Tour status.
+- Actual expenses.
+- Final profitability.
+
+The Tour Code must be searchable throughout the entire application.
+
+## 3.2 Different Identifiers for Different Business Stages
+
+Do not use one identifier for everything.
+
+Maintain separate references:
+
+- Lead ID: First enquiry.
+- Enquiry ID: Formal travel requirement.
+- Quotation ID: Each quotation and its revisions.
+- Booking ID: Confirmed booking record.
+- Tour Code: Unique reference for the confirmed tour.
+- Supplier Booking ID: Individual supplier reservation.
+- Payment ID: Individual financial transaction.
+- Expense ID: Individual expense record.
+- Voucher ID: Individual generated travel document.
+
+All these records must be linked correctly.
+
+## 3.3 Tour Code Behaviour
+
+The Tour Code must be generated only after the configured booking-confirmation conditions are satisfied.
+
+Possible conditions:
+
+- Client approval received.
+- Booking confirmation recorded.
+- Required advance received or an authorised credit/exception approved.
+- Sales manager approval, if required.
+
+Make these conditions configurable.
+
+Once generated:
+
+- The code must never change.
+- It must not be reused.
+- All departments must use the same code.
+- Every related record must retain the reference.
+- Revisions must not generate a duplicate Tour Code for the same confirmed tour.
+- If a confirmed tour is cancelled, retain its history and code.
+- If one booking is split into multiple independently operated tours, create linked child Tour Codes under the original booking or group reference.
+
+---
+
+# PART 4: COMPLETE BUSINESS WORKFLOW
+
+Implement the following workflow as the backbone of the system.
+
+<CodeBlock language="mermaid">
+flowchart TD
+    A[Enquiry from Any Channel] --> B[CRM Lead Creation]
+    B --> C[Sales Assignment]
+    C --> D[Understand Client Requirements]
+    D --> E{Package Available?}
+    E -->|Yes| F[Select Existing Package]
+    E -->|No| G[Create New Itinerary]
+    F --> H[Costing and Customisation]
+    G --> H
+    H --> I[Quotation Preparation]
+    I --> J[Send via Email or WhatsApp]
+    J --> K{Client Confirmation?}
+    K -->|Revision| H
+    K -->|Rejected| L[Lost or Follow-up]
+    K -->|Confirmed| M[Collect Advance or Approve Credit]
+    M --> N[Generate Unique Tour Code]
+    N --> O[Sales-to-Operations Handover]
+    O --> P[Destination-wise Operations Planning]
+    P --> Q[Hotel, Transport, Activities and Other Bookings]
+    Q --> R[Supplier Confirmation]
+    R --> S[Accounts Approval and Supplier Payments]
+    S --> T[Voucher and Tour Documentation]
+    T --> U[Tour Execution]
+    U --> V[Actual Expense Capture]
+    V --> W[Supplier Reconciliation]
+    W --> X[Final Customer Collection]
+    X --> Y[Tour Closure]
+    Y --> Z[Final Profitability and MIS]
+</CodeBlock>
+
+Every stage must have a proper status, responsible user, timestamp, and activity history.
+
+---
+
+# PART 5: CRM AND ENQUIRY MANAGEMENT
+
+## 5.1 Lead Sources
+
+Enquiries can arrive from anywhere.
+
+Support:
+
+- Website enquiry forms.
+- Google Ads.
+- Meta/Facebook Ads.
+- Instagram.
+- WhatsApp.
+- Email.
+- Phone calls.
+- Direct B2B agents.
+- Existing vendors.
+- Travel agents.
+- Referrals.
+- Corporate enquiries.
+- Walk-in customers.
+- Exhibitions and trade events.
+- Manual employee entry.
+- Other marketing channels.
+
+The system must centralise all enquiries.
+
+## 5.2 Lead Creation
+
+Create a complete enquiry form.
+
+Fields:
+
+**Enquiry information**
+- Lead ID.
+- Enquiry date.
+- Lead source.
+- Campaign name, if available.
+- Enquiry type.
+- Domestic/international.
+- Destination.
+- Travel start date.
+- Travel end date.
+- Number of nights.
+- Number of days.
+- Flexible travel dates.
+- Travel purpose.
+- Package requirement.
+- Budget range.
+- Priority.
+
+**Client/B2B agent information**
+- Company name.
+- Agent name.
+- Contact person.
+- Phone.
+- WhatsApp number.
+- Email.
+- City.
+- Country.
+- GST or tax details where relevant.
+- Existing/new client.
+- Credit eligibility, if applicable.
+
+**Traveller information**
+- Number of adults.
+- Children.
+- Infant count.
+- Age of children.
+- Room requirements.
+- Nationality.
+- Special requests.
+- Dietary requirements.
+- Accessibility requirements.
+
+**Requirement details**
+- Preferred hotel category.
+- Transport preference.
+- Sightseeing.
+- Activities.
+- Meals.
+- Guide requirement.
+- Visa assistance.
+- Flight requirement.
+- Other services.
+
+## 5.3 Sales Assignment
+
+Implement:
+
+- Manual assignment.
+- Automatic lead distribution.
+- Destination-wise assignment.
+- Salesperson-wise assignment.
+- Team-wise assignment.
+- Priority-based assignment.
+- Manager reassignment.
+
+The system should track:
+
+- Lead received time.
+- First response time.
+- Follow-up dates.
+- Contact history.
+- Email history.
+- WhatsApp history.
+- Call notes.
+- Salesperson activity.
+- Conversion status.
+
+## 5.4 Sales Pipeline
+
+Use configurable stages:
+
+1. New Enquiry
+2. Assigned
+3. Contacted
+4. Requirement Understood
+5. Itinerary Preparation
+6. Costing
+7. Quotation Sent
+8. Follow-up
+9. Negotiation
+10. Revision Requested
+11. Awaiting Confirmation
+12. Won
+13. Lost
+14. On Hold
+
+Lost enquiries should have mandatory reason categories.
+
+Examples:
+
+- Budget mismatch.
+- Competitor selected.
+- Dates unavailable.
+- Client unresponsive.
+- Destination changed.
+- Supplier unavailable.
+- Other.
+
+## 5.5 AI Email Reader
+
+Add an optional AI-powered email processing module.
+
+When an email arrives from a client or vendor:
+
+1. Read the email through an authorised email integration.
+2. Extract destination, travel dates, guest count, requirements, and contact information.
+3. Detect whether it is a new enquiry, vendor proposal, quotation, revision, or booking confirmation.
+4. Match it against existing records.
+5. Suggest creating or updating the appropriate record.
+6. Require confirmation before making important changes.
+
+Do not automatically create duplicate leads from reply chains.
+
+---
+
+# PART 6: B2B AGENT AND CLIENT MANAGEMENT
+
+This is an essential module because the company operates in a B2B environment.
+
+The system must distinguish between:
+
+- B2B travel agents.
+- Tour operators.
+- Corporate clients.
+- Direct customers, where applicable.
+- External destination partners.
+- Suppliers and vendors.
+
+A B2B agent may send multiple enquiries and bookings.
+
+Maintain a central agent profile.
+
+Fields:
+
+- Agent ID.
+- Company name.
+- Contact person.
+- Phone and email.
+- Address.
+- Country.
+- GST/tax details.
+- Business category.
+- Destination interests.
+- Assigned salesperson.
+- Credit terms.
+- Credit limit.
+- Outstanding balance.
+- Total bookings.
+- Total revenue.
+- Payment history.
+- Contract details.
+- Documents.
+- Agent status.
+
+### Agent credit management
+
+Allow authorised credit arrangements.
+
+Example:
+
+An agent may confirm a tour under an approved credit arrangement instead of paying the entire advance immediately.
+
+The system must:
+
+- Check credit eligibility.
+- Check available credit limit.
+- Track outstanding balances.
+- Alert when the limit is reached.
+- Require approval for exceptions.
+- Maintain ageing reports.
+- Block or warn about further bookings according to configured rules.
+
+Do not assume all clients pay in advance or that every B2B client has credit facilities.
+
+---
+
+# PART 7: PACKAGE AND PRODUCT MANAGEMENT
+
+Build a central Package Library.
+
+The package library must support both own packages and vendor-provided packages.
+
+## 7.1 Package Categories
+
+- Domestic packages.
+- International packages.
+- Northeast packages.
+- Customised tours.
+- Corporate tours.
+- Family tours.
+- Honeymoon packages.
+- Adventure tours.
+- Wildlife tours.
+- Pilgrimage tours.
+- Educational tours.
+- Special-interest tours.
+
+## 7.2 Package Source
+
+Every package must have a source type:
+
+1. Company-owned package.
+2. Vendor-provided package.
+3. Hybrid package.
+4. Custom-built package.
+
+For vendor packages, maintain:
+
+- Supplier.
+- Original package name.
+- Original itinerary.
+- Original cost.
+- Currency.
+- Validity period.
+- Supplier inclusions.
+- Supplier exclusions.
+- Supplier terms.
+- Supporting documents.
+- Rate source.
+- Last updated date.
+
+## 7.3 Package Management Features
+
+- Create packages.
+- Edit packages.
+- Duplicate packages.
+- Archive packages.
+- Upload package PDFs.
+- Upload vendor quotations.
+- Import package details from Excel.
+- Maintain day-wise itineraries.
+- Add destination photographs.
+- Define inclusions and exclusions.
+- Configure hotel categories.
+- Define transport types.
+- Configure sightseeing and activities.
+- Define seasonal pricing.
+- Configure child and infant pricing.
+- Define validity.
+- Maintain internal notes.
+- Track package revisions.
+
+A package update must not silently alter an already confirmed tour.
+
+Confirmed tours must retain a snapshot of the package and prices used at the time of booking.
+
+---
+
+# PART 8: SMART ITINERARY BUILDER
+
+This is one of the most important sales modules.
+
+The sales team must be able to create professional itineraries without depending on external software.
+
+## 8.1 Itinerary Creation Options
+
+Provide three options.
+
+**Option A: Select Existing Company Package**
+
+Sales searches the package library, selects a suitable package, and customises it.
+
+**Option B: Import Vendor Package**
+
+Sales uploads a vendor's itinerary or proposal in PDF, DOCX, or another supported format.
+
+AI extracts:
+
+- Destination.
+- Travel dates.
+- Number of nights.
+- Day-wise activities.
+- Hotel details.
+- Transport details.
+- Meal plans.
+- Inclusions.
+- Exclusions.
+- Supplier rates.
+- Terms and conditions.
+
+The sales employee reviews and corrects the extracted information before saving it.
+
+**Option C: Create From Scratch**
+
+Sales creates a custom itinerary using a day-wise builder.
+
+## 8.2 Itinerary Editor
+
+For every day, provide:
+
+- Day number.
+- Date.
+- Starting location.
+- Ending location.
+- Travel distance, where known.
+- Travel duration, where known.
+- Hotel check-in/check-out.
+- Activities.
+- Sightseeing.
+- Meals.
+- Transport.
+- Guide.
+- Notes.
+- Free time.
+- Special arrangements.
+
+Allow:
+
+- Add day.
+- Delete day.
+- Duplicate day.
+- Reorder days.
+- Change destination.
+- Add hotel.
+- Add activities.
+- Add transfers.
+- Add optional experiences.
+- Add photographs.
+- Add internal notes.
+
+Provide a timeline or drag-and-drop itinerary interface.
+
+## 8.3 AI Itinerary Assistant
+
+The AI assistant may:
+
+- Suggest routes.
+- Suggest activities.
+- Detect missing days.
+- Detect overlapping activities.
+- Identify unrealistic travel schedules.
+- Suggest alternatives.
+- Summarise itinerary content.
+- Convert supplier itineraries into editable drafts.
+- Identify missing hotel nights.
+- Detect inconsistencies in dates.
+
+Do not fabricate hotel availability, travel times, activity availability, or destination operating hours.
+
+Any AI-generated content must be reviewed by sales before being sent to a client.
+
+## 8.4 Client Itinerary Output
+
+Generate professional branded documents:
+
+- Day-wise itinerary.
+- Tour summary.
+- Accommodation information.
+- Inclusions.
+- Exclusions.
+- Terms and conditions.
+- Selling price.
+- Payment schedule.
+- Contact information.
+
+Support PDF and shareable digital formats.
+
+---
+
+# PART 9: ADVANCED TOUR COSTING AND PRICING ENGINE
+
+The costing engine must be one of the strongest parts of the system.
+
+Do not calculate tour selling prices using a single manually entered total.
+
+Every tour must have component-wise costing.
+
+## 9.1 Cost Components
+
+**Hotel**
+- Hotel name.
+- Destination.
+- Room category.
+- Room count.
+- Check-in.
+- Check-out.
+- Number of nights.
+- Meal plan.
+- Supplier rate.
+- Applicable taxes.
+- Extra bed.
+- Child policy.
+- Cancellation terms.
+
+**Transportation**
+- Vehicle category.
+- Vehicle count.
+- Vehicle ownership.
+- Supplier.
+- Billing type.
+- Number of days.
+- Kilometres.
+- Transfer charges.
+- Driver allowance.
+- Fuel/toll/parking, depending on contract.
+- Extra kilometre charges.
+- Night charges.
+- Taxes.
+
+**Activities and sightseeing**
+- Activity.
+- Supplier.
+- Participant count.
+- Adult rate.
+- Child rate.
+- Group rate.
+- Guide cost.
+- Entry fees.
+
+**Other services**
+- Meals.
+- Local guides.
+- Permits.
+- Ferry or boat.
+- Flights, if managed.
+- Visa.
+- Insurance.
+- Special arrangements.
+- Other expenses.
+
+## 9.2 Source of Each Component
+
+Every costing component must have a source classification:
+
+- Own company resource.
+- Contracted supplier.
+- Third-party vendor.
+- Vendor package allocation.
+- Estimated cost.
+- Manually entered expense.
+
+This is important because a package may combine multiple suppliers and internal resources.
+
+## 9.3 Own Vehicle Versus Hired Vehicle
+
+Implement a separate transport source field.
+
+**Own Vehicle**
+
+If the company uses its own vehicle:
+
+- No external transport supplier advance is required.
+- No vendor payment request should be generated.
+- The vehicle must be assigned from the internal fleet.
+- Record internal operating cost.
+- Include fuel, driver, maintenance allocation, toll, parking, and other applicable costs.
+- Track vehicle utilisation.
+
+**Hired Vehicle**
+
+If the company hires a vehicle from an external party:
+
+- Select the transport supplier.
+- Record the supplier quotation.
+- Record the agreed rate.
+- Create a supplier booking.
+- Calculate advance requirements.
+- Send the payment request to Accounts.
+- Track advance, balance, and final settlement.
+
+Do not treat the absence of an external payment as zero cost for an own vehicle.
+
+## 9.4 Selling Price
+
+The system must distinguish:
+
+1. Supplier cost.
+2. Internal cost.
+3. Allocated package cost.
+4. Estimated cost.
+5. Selling price.
+6. Markup.
+7. Gross margin.
+8. Applicable taxes.
+9. Net receivable from client.
+10. Actual final profitability.
+
+Allow pricing models:
+
+- Per person.
+- Per couple.
+- Per room.
+- Per vehicle.
+- Per group.
+- Per day.
+- Per night.
+- Fixed package price.
+- Component-wise price.
+- Custom negotiated price.
+
+Support adult, child, infant, single occupancy, double occupancy, triple sharing, and other configurable pricing structures.
+
+## 9.5 Pricing and Approval Controls
+
+- Define minimum margin rules.
+- Set destination-wise pricing rules.
+- Set salesperson discount permissions.
+- Require manager approval below configured margin.
+- Maintain quotation versions.
+- Prevent silent modification of confirmed prices.
+- Store the exchange rate used for foreign currency conversion.
+- Maintain supplier rate validity.
+- Warn when the costing is based on expired rates.
+
+## 9.6 Example
+
+A tour contains:
+
+| Component | Source | Cost |
+|---|---|---:|
+| Hotel | External supplier A | ₹40,000 |
+| Own vehicle | Company fleet | ₹12,000 internal cost |
+| Activities | External supplier B | ₹8,000 |
+| Guide | Local vendor | ₹4,000 |
+| Other expenses | Internal/estimated | ₹2,000 |
+
+Total estimated cost = ₹66,000.
+
+The sales team may quote ₹85,000 before applicable taxes, subject to the actual commercial rules.
+
+The system must calculate the margin transparently and show the contribution of every component.
+
+This is an illustrative example, not a fixed pricing rule.
+
+---
+
+# PART 10: QUOTATION AND REVISION MANAGEMENT
+
+The sales team must be able to create a quotation directly from the itinerary and costing.
+
+Features:
+
+- Generate quotation number.
+- Select client or B2B agent.
+- Link enquiry.
+- Link package.
+- Link itinerary.
+- Show selling price.
+- Show inclusions.
+- Show exclusions.
+- Show terms and conditions.
+- Show payment schedule.
+- Apply authorised discounts.
+- Generate PDF.
+- Send through email.
+- Send through WhatsApp.
+- Record delivery status where available.
+- Record client response.
+- Track revisions.
+
+### Revision management
+
+Every revision must create a new version.
+
+Example:
+
+- QT-0001-V1
+- QT-0001-V2
+- QT-0001-V3
+
+Store:
+
+- Previous selling price.
+- Revised selling price.
+- Changes to itinerary.
+- Changes to hotel.
+- Changes to transport.
+- Changes to guest count.
+- Changes to supplier cost.
+- Reason for revision.
+- Revised by.
+- Approved by.
+- Date.
+
+Never overwrite an old quotation.
+
+---
+
+# PART 11: BOOKING CONFIRMATION AND TOUR CREATION
+
+When a client confirms the quotation:
+
+1. Sales records confirmation.
+2. Uploads or links written confirmation where applicable.
+3. Records the agreed selling price.
+4. Records payment terms.
+5. Creates a booking.
+6. Records customer advance receipt or approved credit terms.
+7. Generates the Tour Code.
+8. Locks the approved commercial version.
+9. Creates the operations handover.
+10. Creates destination-wise task groups.
+11. Creates accounts receivable requirements.
+
+The system must not automatically consider a client's promised payment as money received.
+
+Maintain separate statuses:
+
+- Payment expected.
+- Payment proof submitted.
+- Payment received.
+- Payment verified.
+- Payment partially received.
+- Payment failed.
+- Payment reversed.
+
+---
+
+# PART 12: SALES-TO-OPERATIONS HANDOVER
+
+This is a critical business process.
+
+Once a booking is confirmed, Sales must hand it over to Operations with all relevant information.
+
+Create a dedicated handover screen.
+
+### Handover information
+
+- Tour Code.
+- Booking ID.
+- Client details.
+- B2B agent details.
+- Traveller details.
+- Destination.
+- Travel dates.
+- Day-wise itinerary.
+- Guest count.
+- Rooming requirements.
+- Hotel requirements.
+- Transport requirements.
+- Vehicle source.
+- Activities.
+- Guide requirements.
+- Meals.
+- Special requests.
+- Customer selling price.
+- Customer advance received.
+- Outstanding customer payment.
+- Supplier costing.
+- Confirmed inclusions.
+- Exclusions.
+- Sales commitments.
+- Quotation.
+- Confirmation proof.
+- Documents.
+- Important internal notes.
+
+Sales must not simply assign a Tour Code and assume the handover is complete.
+
+The operations manager should review the handover.
+
+Support:
+
+- Submit handover.
+- Accept handover.
+- Request clarification.
+- Return to Sales.
+- Approve operational readiness.
+
+Maintain a complete handover history.
+
+---
+
+# PART 13: DESTINATION-WISE OPERATIONS MANAGEMENT
+
+Operations should be organised around destinations and travel dates.
+
+Examples:
+
+- Northeast Operations.
+- Bhutan Operations.
+- Nepal Operations.
+- Thailand Operations.
+- Vietnam Operations.
+- Other destination teams.
+
+One tour may involve multiple destination teams.
+
+The system must allocate individual operational tasks to the relevant destination team while retaining the same Tour Code.
+
+## 13.1 Operations Dashboard
+
+Show:
+
+- Upcoming tours.
+- Tours currently running.
+- Destination-wise tour count.
+- Hotel booking pending.
+- Transport booking pending.
+- Activity confirmation pending.
+- Supplier advance pending.
+- Booking confirmation pending.
+- Vouchers pending.
+- Guest details pending.
+- Tour execution issues.
+- Tour completion pending.
+
+Provide filters for:
+
+- Destination.
+- Tour Code.
+- Travel date.
+- Operations employee.
+- Supplier.
+- Booking status.
+- Payment status.
+
+## 13.2 Operations Task Management
+
+For each tour, create tasks such as:
+
+- Confirm hotels.
+- Confirm room availability.
+- Confirm transportation.
+- Assign own fleet vehicle.
+- Book external transport.
+- Confirm guides.
+- Confirm activities.
+- Verify sightseeing.
+- Arrange permits.
+- Verify guest information.
+- Prepare vouchers.
+- Prepare driver instructions.
+- Prepare destination movement plan.
+- Confirm supplier balances.
+
+Each task should have:
+
+- Task ID.
+- Tour Code.
+- Destination.
+- Assigned employee.
+- Supplier.
+- Due date.
+- Priority.
+- Status.
+- Notes.
+- Supporting documents.
+- Completion evidence.
+
+## 13.3 Operations Statuses
+
+- Not Started.
+- Pending.
+- Enquiry Sent.
+- Availability Awaited.
+- Negotiation.
+- Confirmed.
+- Payment Pending.
+- Partially Paid.
+- Fully Paid.
+- Voucher Generated.
+- Completed.
+- Cancelled.
+- Issue Raised.
+
+---
+
+# PART 14: HOTEL AND SUPPLIER BOOKING MANAGEMENT
+
+Build a complete supplier booking module.
+
+Supplier categories:
+
+- Hotels.
+- Resorts.
+- Homestays.
+- Transport companies.
+- Individual vehicle owners.
+- Local DMCs.
+- Guides.
+- Activity providers.
+- Restaurants.
+- Event partners.
+- Other destination suppliers.
+
+Every supplier must have a profile.
+
+### Supplier profile
+
+- Supplier ID.
+- Company name.
+- Contact person.
+- Destination.
+- Service category.
+- Phone.
+- Email.
+- Address.
+- Bank details.
+- Tax details.
+- Contract.
+- Rate agreement.
+- Payment terms.
+- Advance requirement.
+- Credit days.
+- Outstanding balance.
+- Documents.
+- Supplier status.
+
+### Hotel booking
+
+The operations team should be able to create hotel reservations directly from the Tour Code.
+
+Fields:
+
+- Tour Code.
+- Hotel.
+- Destination.
+- Check-in.
+- Check-out.
+- Room count.
+- Room category.
+- Rooming configuration.
+- Meal plan.
+- Guest names.
+- Supplier rate.
+- Taxes.
+- Total amount.
+- Advance required.
+- Advance paid.
+- Balance payable.
+- Cancellation policy.
+- Confirmation number.
+- Booking voucher.
+
+Allow multiple hotel bookings under one Tour Code.
+
+### Supplier booking lifecycle
+
+Enquiry → Rate Received → Availability Checked → Negotiation → Approved → Booking Confirmed → Advance Required → Advance Paid → Service Delivered → Final Invoice → Reconciled → Closed.
+
+Never mark a supplier booking confirmed merely because an employee entered a supplier name.
+
+Maintain supplier confirmation references or supporting evidence.
+
+---
+
+# PART 15: TRANSPORTATION AND FLEET MANAGEMENT
+
+This deserves a separate module because transportation can be sourced internally or externally.
+
+## 15.1 Transport Sources
+
+1. Company-owned vehicles.
+2. Hired vehicles.
+3. Vendor-provided transport package.
+4. Client-provided transport, if applicable.
+
+## 15.2 Own Fleet Management
+
+Maintain:
+
+- Vehicle registration.
+- Vehicle category.
+- Seating capacity.
+- Vehicle ownership.
+- Driver.
+- Insurance.
+- Permit.
+- Fitness certificate.
+- Maintenance.
+- Availability.
+- Current assignment.
+- Mileage.
+- Fuel records.
+- Internal cost.
+
+Prevent assigning the same vehicle to overlapping tours unless an authorised exception is recorded.
+
+## 15.3 Hired Transport Management
+
+Maintain:
+
+- Transport vendor.
+- Vehicle category.
+- Vehicle count.
+- Pickup and drop.
+- Travel date.
+- Route.
+- Number of days.
+- Kilometres.
+- Agreed rate.
+- Advance amount.
+- Balance amount.
+- Driver details.
+- Confirmation status.
+
+## 15.4 Tour Movement Chart
+
+Build a visual calendar showing:
+
+- Tour Code.
+- Destination.
+- Vehicle.
+- Driver.
+- Pickup time.
+- Drop location.
+- Travel date.
+- Hotel check-in.
+- Hotel check-out.
+- Activities.
+- Guide assignments.
+- Operational status.
+
+The calendar must help identify scheduling conflicts.
+
+---
+
+# PART 16: ACCOUNTS AND FINANCE MANAGEMENT
+
+The Accounts module must be integrated with every tour.
+
+Accounts must be able to search or select a Tour Code and immediately see all relevant financial information.
+
+This is a central requirement.
+
+## 16.1 Accounts Dashboard
+
+Show:
+
+- Customer advances received.
+- Customer outstanding.
+- Supplier advances required.
+- Supplier advances paid.
+- Supplier balances payable.
+- Pending payment approvals.
+- Expenses recorded.
+- Upcoming payment deadlines.
+- Overdue receivables.
+- Overdue payables.
+- Tour-wise estimated profitability.
+- Tour-wise actual profitability.
+- Cash flow summary.
+
+## 16.2 Tour Financial Summary
+
+When Accounts enters a Tour Code, display:
+
+**Revenue**
+- Final selling price.
+- Applicable taxes.
+- Customer advance.
+- Additional collections.
+- Outstanding customer balance.
+- Credit amount, if applicable.
+
+**Estimated cost**
+- Hotel cost.
+- Transport cost.
+- Activity cost.
+- Guide cost.
+- Meals.
+- Other services.
+- Internal fleet cost.
+- Other estimated expenses.
+
+**Supplier payments**
+- Supplier name.
+- Booking reference.
+- Total agreed amount.
+- Advance required.
+- Advance paid.
+- Balance payable.
+- Due date.
+- Payment status.
+
+**Actual expenses**
+- Supplier invoices.
+- Driver expenses.
+- Fuel.
+- Toll.
+- Parking.
+- Guide expenses.
+- Local purchases.
+- Miscellaneous expenses.
+
+**Profitability**
+- Expected revenue.
+- Estimated cost.
+- Expected gross profit.
+- Actual revenue.
+- Actual cost.
+- Actual gross profit.
+- Variance.
+- Outstanding liabilities.
+
+Clearly separate tax amounts from revenue and costs according to the applicable accounting treatment.
+
+Do not treat a cash advance as revenue earned merely because money has been received.
+
+## 16.3 Customer Advance Management
+
+After client confirmation, the system should create the collection schedule.
+
+Example:
+
+- Booking advance: 30%.
+- Second payment: 40%.
+- Final payment: 30%.
+
+These percentages are configurable and must not be hardcoded.
+
+Track:
+
+- Expected amount.
+- Due date.
+- Amount received.
+- Payment mode.
+- Transaction reference.
+- Receipt number.
+- Bank.
+- Verification status.
+- Remaining balance.
+
+Allow partial payments and multiple receipts.
+
+## 16.4 Supplier Advance Management
+
+This is one of the most important workflows.
+
+Suppose a tour includes:
+
+- Hotel Supplier A: ₹40,000.
+- Transport Vendor B: ₹20,000.
+- Activity Supplier C: ₹8,000.
+- Own vehicle: Internal cost ₹12,000.
+
+The system must create supplier payment requirements for external vendors only.
+
+For example:
+
+- Hotel Supplier A requires ₹15,000 advance.
+- Transport Vendor B requires ₹5,000 advance.
+- Activity Supplier C requires no advance.
+
+The accounts team should see the requests and process them individually.
+
+The own vehicle should appear in the tour's internal cost calculation, but no external supplier payment request should be created.
+
+### Payment workflow
+
+Operations creates or confirms the supplier booking.
+
+The system generates the payable schedule.
+
+Accounts reviews:
+
+- Supplier.
+- Tour Code.
+- Booking reference.
+- Agreed cost.
+- Advance required.
+- Previous payments.
+- Current outstanding.
+- Supporting confirmation.
+- Due date.
+
+Accounts then:
+
+1. Approves or rejects the request.
+2. Records the payment.
+3. Uploads proof.
+4. Adds bank transaction reference.
+5. Updates the supplier ledger.
+6. Updates the booking payment status.
+
+Support maker-checker approval for high-value payments and configurable approval thresholds.
+
+## 16.5 Important Payment Distinction
+
+Maintain separate financial records for:
+
+- Customer money received.
+- Supplier money payable.
+- Supplier money paid.
+- Internal company expenses.
+- Own fleet operating costs.
+- Employee advances.
+- Employee reimbursements.
+- Taxes.
+- Refunds.
+- Cancellation charges.
+- Bank charges.
+- Foreign exchange differences.
+
+Do not combine all these into one generic expense table without proper classifications and relationships.
+
+## 16.6 Supplier Ledger
+
+For each supplier, show:
+
+- Opening balance.
+- Tour-wise bookings.
+- Supplier invoices.
+- Advance payments.
+- Balance payments.
+- Refunds.
+- Credit notes.
+- Adjustments.
+- Closing balance.
+
+Allow statements to be downloaded.
+
+## 16.7 Customer Ledger
+
+For each B2B agent or client, show:
+
+- Opening balance.
+- Confirmed tours.
+- Invoices.
+- Receipts.
+- Credit notes.
+- Refunds.
+- Outstanding amount.
+- Ageing.
+- Credit limit.
+- Closing balance.
+
+## 16.8 Accounting Integrity
+
+Implement proper double-entry accounting or a clearly defined financial ledger that can be reconciled with a recognised accounting system.
+
+Do not make payment entries editable without audit history.
+
+Posted transactions should be reversed or adjusted through authorised entries rather than silently deleted.
+
+Support:
+
+- Bank accounts.
+- Cash accounts.
+- Multiple payment modes.
+- Payment reconciliation.
+- Expense vouchers.
+- Receipts.
+- Supplier payment vouchers.
+- Customer invoices.
+- Credit notes.
+- Debit notes.
+- Refunds.
+
+Research GST and other applicable tax rules with current official sources before implementing tax calculations.
+
+Provide configurable tax rules and avoid hardcoding rates without verification.
+
+---
+
+# PART 17: INVOICE, RECEIPT AND VOUCHER GENERATION
+
+Generate professional documents directly from tour data.
+
+Required documents:
+
+1. Quotation.
+2. Revised quotation.
+3. Proforma invoice.
+4. Customer invoice.
+5. Customer receipt.
+6. Hotel booking voucher.
+7. Transport voucher.
+8. Activity voucher.
+9. Tour confirmation.
+10. Supplier payment voucher.
+11. Tour itinerary.
+12. Tour movement sheet.
+13. Driver instruction sheet.
+14. Guest manifest.
+15. Rooming list.
+16. Tour closure statement.
+
+All documents must automatically fetch the relevant data from the Tour Code.
+
+Provide configurable templates, branding, numbering, currencies, terms, and layouts.
+
+Prevent the generation of a final supplier confirmation voucher when the underlying booking has not been confirmed.
+
+---
+
+# PART 18: TOUR EXECUTION AND GROUND OPERATIONS
+
+The software must not stop after supplier booking.
+
+It should support actual tour execution.
+
+### Pre-tour checklist
+
+- Customer details confirmed.
+- Guest documents collected.
+- Hotel bookings confirmed.
+- Transport confirmed.
+- Guide confirmed.
+- Activities confirmed.
+- Supplier advances processed.
+- Vouchers issued.
+- Emergency contact information available.
+- Final itinerary shared.
+
+### During-tour operations
+
+Provide a tour operations screen with:
+
+- Current tour status.
+- Destination.
+- Today's itinerary.
+- Guest count.
+- Driver details.
+- Hotel details.
+- Guide details.
+- Pickup/drop details.
+- Emergency contact.
+- Operational notes.
+- Issues and complaints.
+
+Allow authorised employees to record:
+
+- Guest complaints.
+- Hotel issues.
+- Transport delays.
+- Activity cancellations.
+- Additional expenses.
+- Itinerary changes.
+- Supplier service failures.
+- Emergency incidents.
+
+Every issue should be linked to the Tour Code and assigned to a responsible employee.
+
+### Mobile-friendly field operations
+
+Operations staff should be able to access their assigned tours through a mobile-friendly interface.
+
+Support:
+
+- View daily assignments.
+- View vouchers.
+- Confirm check-in.
+- Confirm pickup.
+- Upload evidence.
+- Record additional expenses.
+- Report issues.
+- Update task status.
+
+---
+
+# PART 19: TOUR COMPLETION AND FINAL RECONCILIATION
+
+After a tour is completed, create a mandatory tour closure process.
+
+The operations team confirms:
+
+- All services delivered.
+- All hotel nights completed.
+- Transport completed.
+- Activities completed.
+- Any services cancelled.
+- Any additional services delivered.
+- Supplier issues.
+- Guest complaints.
+- Unresolved liabilities.
+
+Accounts then reconciles:
+
+- Customer collections.
+- Supplier invoices.
+- Supplier payments.
+- Driver expenses.
+- Fuel and tolls.
+- Guide payments.
+- Additional expenses.
+- Refunds.
+- Cancellation charges.
+- Tax amounts.
+- Outstanding balances.
+
+Only after authorised closure should the tour move to the final closed state.
+
+### Final tour profitability
+
+Calculate:
+
+Actual Revenue − Actual Direct Costs = Actual Gross Profit
+
+Show the difference between:
+
+- Original estimated cost.
+- Approved final budget.
+- Actual cost.
+- Original quoted price.
+- Final invoiced price.
+- Actual collection.
+- Outstanding receivable.
+- Actual profit.
+- Margin variance.
+
+Provide reasons for any significant deviation.
+
+This information must feed back into future package costing and management reports.
+
+---
+
+# PART 20: DESTINATION-WISE TEAM MANAGEMENT
+
+The company may operate multiple destinations at the same time.
+
+Build destination-wise teams.
+
+Example:
+
+- Northeast Operations.
+- Bhutan Operations.
+- Nepal Operations.
+- Thailand Operations.
+- Vietnam Operations.
+- Central Operations.
+
+Each team should only see and manage the records permitted by its role and assigned destination.
+
+Support:
+
+- Destination manager.
+- Operations executive.
+- Hotel booking executive.
+- Transport coordinator.
+- Guide coordinator.
+- Accounts employee.
+- Sales executive.
+- Management.
+
+A single Tour Code may be visible to multiple teams with different responsibilities.
+
+---
+
+# PART 21: AUTOMATION ENGINE
+
+Build an event-based automation engine.
+
+Do not make automation dependent on employees remembering every task.
+
+Examples:
+
+| Trigger | Automated Action |
+|---|---|
+| New enquiry received | Assign salesperson and create follow-up |
+| No first response within SLA | Alert salesperson and manager |
+| Quotation sent | Schedule follow-up |
+| Quotation revision requested | Notify assigned salesperson |
+| Client confirms | Start booking confirmation workflow |
+| Advance received | Update customer collection status |
+| Tour Code generated | Notify Operations and Accounts |
+| Sales handover submitted | Notify Operations Manager |
+| Hotel booking pending | Notify destination team |
+| Supplier advance due | Create Accounts task |
+| Supplier payment completed | Notify Operations |
+| Tour starts soon | Trigger pre-tour checklist |
+| Tour begins | Activate execution dashboard |
+| Tour completed | Trigger closure and reconciliation |
+| Customer balance overdue | Alert Accounts and Sales |
+| Supplier payment overdue | Alert Accounts |
+| Tour closed | Update management reports |
+
+Automation must be configurable by authorised administrators.
+
+Maintain an automation execution log.
+
+Failed notifications must be retriable without creating duplicate transactions or duplicate records.
+
+---
+
+# PART 22: WHATSAPP AND EMAIL INTEGRATION
+
+The platform should support business communication.
+
+Research current supported APIs and providers before implementation.
+
+Potential integrations to evaluate:
+
+- Meta WhatsApp Business Platform.
+- Approved WhatsApp BSP providers.
+- Google Workspace Gmail API.
+- Microsoft Graph for Outlook.
+- Transactional email services.
+
+### WhatsApp features
+
+- Send quotations.
+- Send revised itineraries.
+- Send payment reminders.
+- Send booking confirmations.
+- Send hotel vouchers.
+- Send transport details.
+- Send trip reminders.
+- Send feedback requests.
+
+### Email features
+
+- Receive client enquiries.
+- Receive vendor proposals.
+- Send quotations.
+- Send booking confirmations.
+- Send supplier booking requests.
+- Send payment remittance advice.
+- Send invoices and receipts.
+
+Store communication history against the appropriate Enquiry ID, Tour Code, or supplier booking.
+
+Respect WhatsApp opt-in, approved template requirements, applicable policies, and email consent rules.
+
+Do not claim that an email or WhatsApp message was delivered merely because the backend accepted the request.
+
+---
+
+# PART 23: MANAGEMENT DASHBOARD AND MIS
+
+Management needs a real-time view of the entire business.
+
+Create an executive command centre.
+
+### Sales metrics
+
+- Total enquiries.
+- Enquiries by source.
+- Destination-wise enquiries.
+- Salesperson-wise performance.
+- Quotation conversion.
+- Confirmed bookings.
+- Lost leads.
+- Average response time.
+- Average booking value.
+- Sales revenue.
+- Pipeline value.
+
+### Operations metrics
+
+- Upcoming tours.
+- Ongoing tours.
+- Completed tours.
+- Pending hotel bookings.
+- Pending transport bookings.
+- Supplier confirmation delays.
+- Destination-wise workload.
+- Tour execution issues.
+
+### Accounts metrics
+
+- Customer collections.
+- Customer outstanding.
+- Supplier payables.
+- Supplier advances.
+- Overdue payments.
+- Cash flow.
+- Bank reconciliation.
+- Tour-wise profitability.
+
+### Package and supplier metrics
+
+- Best-selling packages.
+- Most profitable packages.
+- Supplier-wise business.
+- Supplier rate comparisons.
+- Supplier service performance.
+- Seasonal demand.
+- Cost variance.
+
+### Management reports
+
+- Daily sales report.
+- Weekly sales report.
+- Monthly sales report.
+- Tour-wise profit and loss.
+- Destination-wise profitability.
+- Agent-wise profitability.
+- Supplier-wise ledger.
+- Salesperson performance.
+- Operations performance.
+- Accounts outstanding.
+- Upcoming tour report.
+- Cancellation report.
+- Customer ageing.
+- Supplier ageing.
+- Package performance.
+
+All metrics must be calculated from actual transactional data.
+
+---
+
+# PART 24: AI-POWERED DMC BUSINESS ASSISTANT
+
+Add an AI assistant that understands the business database and provides useful insights.
+
+Example questions:
+
+- Show all tours departing next week.
+- Which tours have pending hotel confirmations?
+- Which tours are waiting for supplier advances?
+- Show customer outstanding by agent.
+- Which supplier payments are due tomorrow?
+- Which destinations have the highest operational workload?
+- What is the expected profit on this Tour Code?
+- Which confirmed tours have incomplete handovers?
+- Which sales executive has the highest conversion?
+- Find packages with outdated supplier rates.
+- Show all tours where the final cost exceeds the original estimate.
+
+### AI assistant rules
+
+- Retrieve information only through authorised backend queries and services.
+- Respect user permissions.
+- Cite the Tour Code or record references used in its answers.
+- Never invent financial figures.
+- Do not execute financial transactions based only on an AI suggestion.
+- Require explicit human approval for payments, refunds, booking changes, or other sensitive operations.
+- Keep an audit trail of important AI-assisted actions.
+
+---
+
+# PART 25: ROLE-BASED ACCESS CONTROL
+
+Create a detailed permission system.
+
+Roles may include:
+
+1. Super Admin.
+2. Managing Director.
+3. General Manager.
+4. Sales Manager.
+5. Sales Executive.
+6. Operations Manager.
+7. Destination Manager.
+8. Operations Executive.
+9. Hotel Booking Executive.
+10. Transport Coordinator.
+11. Accounts Manager.
+12. Accounts Executive.
+13. HR/Admin.
+14. Field Operations Staff.
+15. Read-only Management.
+
+### Permission examples
+
+**Sales**
+- Create and manage enquiries.
+- Create itineraries.
+- Calculate quotations.
+- Send quotations.
+- Record client confirmation.
+- Submit handover.
+- View permitted customer payment information.
+
+**Operations**
+- View confirmed assigned tours.
+- Manage supplier bookings.
+- Allocate hotels and transport.
+- Update operations.
+- Request supplier advances.
+- Generate vouchers.
+- Record tour execution issues.
+
+**Accounts**
+- View tour costing and financial records.
+- Record customer receipts.
+- Process approved supplier payments.
+- Manage supplier ledgers.
+- Reconcile accounts.
+- Generate financial reports.
+
+**Management**
+- View all departments.
+- View profitability.
+- Approve discounts and exceptions.
+- Approve payments according to authority.
+- Review performance.
+
+Permissions must be configurable by module, action, destination, department, and record assignment.
+
+Sales must not be able to modify posted accounting entries.
+
+Operations must not mark a payment as completed without an Accounts transaction.
+
+Accounts must not silently change approved supplier booking prices without an auditable amendment process.
+
+---
+
+# PART 26: DATABASE ARCHITECTURE
+
+Design a properly normalised relational database.
+
+Consider entities such as:
+
+**CRM**
+- Lead
+- Enquiry
+- Client
+- B2BAgent
+- Contact
+- LeadActivity
+- FollowUp
+- Communication
+- LeadAssignment
+
+**Products and sales**
+- Package
+- PackageVersion
+- PackageComponent
+- Itinerary
+- ItineraryDay
+- ItineraryActivity
+- Quotation
+- QuotationVersion
+- QuotationItem
+- Booking
+- Tour
+- TourCode
+- SalesHandover
+
+**Suppliers**
+- Supplier
+- SupplierContact
+- SupplierContract
+- SupplierRate
+- SupplierRateVersion
+- SupplierBooking
+- SupplierBookingItem
+- SupplierConfirmation
+
+**Operations**
+- Destination
+- DestinationTeam
+- OperationTask
+- HotelBooking
+- TransportBooking
+- FleetVehicle
+- Driver
+- ActivityBooking
+- GuideAssignment
+- TourMovement
+- TourIncident
+- Guest
+- TravellerDocument
+- RoomingList
+
+**Finance**
+- CustomerInvoice
+- CustomerReceipt
+- CustomerLedger
+- SupplierInvoice
+- SupplierPayment
+- SupplierLedger
+- Expense
+- ExpenseCategory
+- PaymentApproval
+- BankAccount
+- BankTransaction
+- JournalEntry
+- CreditNote
+- DebitNote
+- Refund
+- TaxRecord
+- TourFinancialSummary
+- TourClosure
+
+**Administration**
+- User
+- Role
+- Permission
+- Department
+- Notification
+- AutomationRule
+- AutomationExecution
+- AuditLog
+- Document
+- ApprovalWorkflow
+
+Do not blindly create every table. Refine the model after understanding the actual workflows.
+
+### Database rules
+
+- Use proper foreign keys.
+- Use indexes for Tour Code, Enquiry ID, Booking ID, and other frequently searched fields.
+- Maintain transaction integrity.
+- Avoid duplicate supplier payments.
+- Prevent duplicate Tour Codes.
+- Maintain version history.
+- Record who created and updated important data.
+- Use soft deletion only where appropriate.
+- Preserve financial transaction history.
+- Support reliable reporting.
+- Use database migrations.
+
+---
+
+# PART 27: FRONTEND DESIGN AND USER EXPERIENCE
+
+The software must look like a premium enterprise travel operations platform.
+
+Do not create a generic admin dashboard with hundreds of unrelated cards.
+
+Design for employees who work with the system throughout the day.
+
+### Visual direction
+
+- Modern enterprise SaaS design.
+- Clean typography.
+- Professional travel-industry colour palette.
+- White and light-neutral backgrounds.
+- Dark navy or graphite text.
+- Restrained blue/teal accents.
+- Clear status indicators.
+- Well-designed data tables.
+- Intuitive forms.
+- Strong information hierarchy.
+- Responsive layouts.
+
+### Main navigation
+
+Use a collapsible sidebar with logical sections:
+
+- Dashboard
+- CRM & Leads
+- Sales
+- Packages
+- Itinerary Builder
+- Quotations
+- Bookings
+- Tours
+- Operations
+- Suppliers
+- Transport & Fleet
+- Accounts
+- Reports
+- AI Assistant
+- Settings
+
+### Global Tour Code Search
+
+Place a prominent global search bar in the header.
+
+When an employee enters a Tour Code, display a central Tour Overview page.
+
+This page should have tabs:
+
+1. Overview.
+2. Client & Guests.
+3. Itinerary.
+4. Sales & Quotation.
+5. Operations.
+6. Hotels.
+7. Transport.
+8. Suppliers.
+9. Accounts.
+10. Expenses.
+11. Documents.
+12. Communications.
+13. Timeline.
+14. Profitability.
+
+This should become the single source of operational visibility for every confirmed tour.
+
+### UX requirements
+
+- Fast navigation.
+- Searchable tables.
+- Advanced filters.
+- Saved filters.
+- Pagination.
+- Bulk operations where safe.
+- Import/export.
+- Clear status labels.
+- Loading and error states.
+- Confirmation before sensitive actions.
+- Responsive mobile views.
+- Useful empty states.
+- Activity timelines.
+
+Build role-specific dashboards rather than showing every module to every employee.
+
+---
+
+# PART 28: INTEGRATION AND MIGRATION FROM SEMBARK
+
+The company currently uses Sembark as part of its travel workflow.
+
+The new platform is intended to consolidate operations.
+
+Research the available Sembark documentation and API capabilities.
+
+Investigate whether authorised APIs or export facilities can provide:
+
+- Leads.
+- Clients.
+- Packages.
+- Itineraries.
+- Quotations.
+- Supplier details.
+- Bookings.
+- Tour records.
+- Payment records.
+- Documents.
+- Communication history.
+
+Do not assume an API is available for every data type.
+
+### Migration requirements
+
+Provide a structured import process for existing data.
+
+Support:
+
+- Excel.
+- CSV.
+- PDF.
+- Structured exports.
+- Manual import templates.
+- Field mapping.
+- Duplicate detection.
+- Data validation.
+- Import preview.
+- Error reports.
+- Import history.
+
+Preserve existing identifiers wherever practical.
+
+Do not migrate unverified data silently.
+
+### Integration principle
+
+Build the new platform so it can operate independently, while allowing an authorised integration with Sembark during transition if required.
+
+Do not scrape Sembark or bypass its access controls.
+
+Do not claim that integration is completed until it has been tested against authorised credentials and actual API documentation.
+
+---
+
+# PART 29: EXTERNAL API RESEARCH
+
+Before implementing external integrations, research current official documentation.
+
+Evaluate the following categories.
+
+| Requirement | Possible technology |
+|---|---|
+| Email integration | Gmail API / Microsoft Graph |
+| WhatsApp | Meta WhatsApp Business Platform / approved BSP |
+| AI itinerary assistance | Gemini API / OpenAI API |
+| PDF generation | Server-side PDF generation |
+| Document extraction | OCR and multimodal LLM |
+| Maps and routing | Google Maps Platform or alternatives |
+| Flight data | Authorised flight API if required |
+| Hotel availability | Authorised supplier API or direct contracting |
+| Currency conversion | Reliable exchange-rate provider |
+| Payments | Suitable payment gateway if online collections are required |
+| Accounting integration | Tally or another authorised accounting platform |
+| File storage | S3-compatible storage |
+| Notifications | Email, WhatsApp and optional SMS provider |
+
+For every API, provide:
+
+- Official documentation URL.
+- What the integration does.
+- Required credentials.
+- Whether it is paid.
+- Verified pricing or usage limits.
+- Data access limitations.
+- Security considerations.
+- Alternative options.
+- Whether it is mandatory for the initial deployment.
+
+Do not assume hotel inventory, airline inventory, supplier pricing, or real-time availability can be accessed through public APIs.
+
+The system must support manual supplier confirmation when no API exists.
+
+---
+
+# PART 30: SECURITY AND BUSINESS CONTROLS
+
+Implement:
+
+- Secure login.
+- Role-based access control.
+- Strong password handling.
+- Session management.
+- Audit trails.
+- API authentication.
+- Secure file uploads.
+- Input validation.
+- Database backups.
+- Rate limiting.
+- Protection against unauthorised access.
+- Secure environment variables.
+- Data export permissions.
+- Financial approval controls.
+- Configurable retention.
+- Error logging.
+- Recovery from failed background jobs.
+
+For financial and booking operations, implement idempotency and transaction safeguards.
+
+Examples:
+
+- Retrying a payment request must not create a duplicate payment.
+- Retrying a booking creation must not generate duplicate supplier bookings.
+- A repeated webhook must not create duplicate receipts.
+- A tour closure must not silently post duplicate final entries.
+
+---
+
+# PART 31: TESTING WITH REALISTIC BUSINESS SCENARIOS
+
+Create realistic test scenarios before declaring the platform complete.
+
+### Scenario 1: Own package
+
+A B2B agent sends a Meghalaya 5 Nights / 6 Days enquiry.
+
+Sales selects an existing company package, customises hotel and vehicle requirements, calculates the selling price, and sends the quotation.
+
+The client confirms and pays an advance.
+
+The system generates a Tour Code and transfers the booking to Operations.
+
+### Scenario 2: Vendor package
+
+A vendor emails a Bhutan package.
+
+Sales imports the package, reviews the itinerary and supplier cost, applies an authorised markup, and sends a quotation.
+
+After confirmation, Operations books the relevant supplier services.
+
+Accounts tracks the supplier advance and balance.
+
+### Scenario 3: Hybrid package
+
+A tour includes:
+
+- Company-owned vehicle.
+- External hotel.
+- Local guide.
+- Third-party activity provider.
+
+The system calculates the total tour cost but creates external payment requests only for actual suppliers.
+
+The own vehicle receives an internal cost allocation, not a vendor advance.
+
+### Scenario 4: Multiple destinations
+
+A tour includes Assam, Meghalaya, and Arunachal Pradesh.
+
+Different operations teams handle their destination segments.
+
+All teams work under the same Tour Code.
+
+The central dashboard shows the full tour.
+
+### Scenario 5: Multiple supplier payments
+
+A confirmed tour requires:
+
+- Hotel advance.
+- Transport advance.
+- Guide advance.
+- Activity balance.
+
+Accounts processes each payment separately and updates the supplier ledger.
+
+### Scenario 6: Partial client payment
+
+A B2B agent pays only part of the required advance.
+
+The system records the partial receipt, outstanding amount, and booking restrictions based on configured rules.
+
+### Scenario 7: Own vehicle assignment
+
+Operations allocates a company vehicle.
+
+The system checks availability, driver assignment, and vehicle compliance.
+
+No external supplier payment is created.
+
+### Scenario 8: Tour cancellation
+
+A confirmed tour is cancelled.
+
+The system calculates and records:
+
+- Customer refund or forfeiture.
+- Supplier cancellation charges.
+- Refunds from suppliers.
+- Non-refundable expenses.
+- Final financial impact.
+
+Do not automatically assume the customer receives a full refund.
+
+### Scenario 9: Tour completion
+
+The tour finishes.
+
+Operations records completion, Accounts reconciles invoices and payments, and Management sees the final profitability.
+
+### Scenario 10: Quotation revision
+
+A client requests a hotel upgrade and additional sightseeing.
+
+Sales creates a new quotation version.
+
+The original version remains preserved.
+
+After confirmation, the approved version becomes the source for Operations and Accounts.
+
+---
+
+# PART 32: IMPLEMENTATION PHASES
+
+Build this as a properly phased enterprise system.
+
+## Phase 1: Foundation
+
+- Repository and business requirement inspection.
+- Database architecture.
+- Authentication.
+- Role and permission management.
+- CRM.
+- Client and agent management.
+- Tour and identifier architecture.
+
+## Phase 2: Sales and Product Management
+
+- Package library.
+- Vendor package import.
+- Itinerary builder.
+- Costing engine.
+- Quotation.
+- Revision management.
+- Confirmation workflow.
+
+## Phase 3: Operations
+
+- Sales handover.
+- Destination-wise allocation.
+- Supplier management.
+- Hotel bookings.
+- Transport and fleet.
+- Activity and guide management.
+- Tour calendar.
+- Vouchers.
+
+## Phase 4: Accounts
+
+- Customer advances.
+- Supplier advances.
+- Customer ledger.
+- Supplier ledger.
+- Expense management.
+- Payment approvals.
+- Invoices and receipts.
+- Tour financial summary.
+
+## Phase 5: Execution and Closure
+
+- Tour execution.
+- Field operations.
+- Incident management.
+- Additional expenses.
+- Final reconciliation.
+- Tour closure.
+- Profitability reporting.
+
+## Phase 6: Automation and Intelligence
+
+- WhatsApp and email integrations.
+- AI email reader.
+- AI itinerary assistant.
+- Automated reminders.
+- Management AI assistant.
+- Advanced MIS.
+- Forecasting and analytics.
+
+Implement the phases in dependency order. Do not build advanced AI features before the underlying transactional data is reliable.
+
+---
+
+# PART 33: REQUIRED DEMONSTRATION EXPERIENCE
+
+The final system must have a complete demo workflow that management can understand.
+
+Create sample data clearly labelled as DEMO.
+
+Include:
+
+- A few B2B agents.
+- A few company-owned packages.
+- A few vendor packages.
+- Multiple destinations.
+- Hotel suppliers.
+- Transport suppliers.
+- Own fleet vehicles.
+- Guides and activity providers.
+- Sales employees.
+- Operations employees.
+- Accounts employees.
+- Sample tours.
+- Customer receipts.
+- Supplier payments.
+- Expenses.
+- Tour profitability.
+
+The demo must allow a user to perform the following sequence:
+
+1. Log in as Sales.
+2. Create an enquiry from an external B2B agent.
+3. Select an existing package.
+4. Create or customise an itinerary.
+5. Calculate package costing.
+6. Generate a quotation.
+7. Revise the quotation.
+8. Confirm the booking.
+9. Record customer advance.
+10. Generate Tour Code.
+11. Log in as Operations.
+12. Open the same Tour Code.
+13. Accept the sales handover.
+14. Book hotels.
+15. Allocate own or hired transport.
+16. Confirm activities and guides.
+17. Request supplier advances.
+18. Log in as Accounts.
+19. Approve and record supplier payments.
+20. Generate vouchers.
+21. Update the tour execution status.
+22. Record additional expenses.
+23. Complete the tour.
+24. Reconcile the finances.
+25. View the final profit and loss report.
+
+All departments must see the same underlying tour record, with role-appropriate permissions.
+
+---
+
+# PART 34: NON-NEGOTIABLE DEVELOPMENT RULES
+
+1. First inspect the existing project and its technical architecture.
+2. Understand the business workflows before implementing database tables.
+3. Do not build a generic travel CRM.
+4. Do not treat the company as only a direct-to-consumer travel agency.
+5. Preserve the distinction between B2B agents, travellers, suppliers, and internal employees.
+6. Support own packages, vendor packages, and hybrid packages.
+7. Keep supplier cost separate from selling price.
+8. Keep estimated cost separate from actual cost.
+9. Keep customer collections separate from supplier payments.
+10. Keep own fleet cost separate from external supplier payments.
+11. Generate one unique Tour Code for each confirmed tour.
+12. Make Tour Code the common reference across departments.
+13. Preserve quotation versions and approved commercial snapshots.
+14. Do not permit Sales to silently change a confirmed tour's cost or selling price.
+15. Do not let Operations mark supplier payments as completed.
+16. Do not let Accounts modify operational bookings without authorised controls.
+17. Maintain complete financial and activity audit trails.
+18. Do not use mock data to pretend an API or integration is working.
+19. Do not hardcode tax rules, payment percentages, or supplier terms.
+20. Do not overwrite existing functionality unnecessarily.
+21. Do not expose API keys or credentials.
+22. Build proper error handling and background job monitoring.
+23. Test business rules, not only the frontend.
+24. Do not claim completion while important workflows remain non-functional.
+
+For every code implementation, provide complete code with the exact file path in a comment at the top of each code block. Explain the implementation in simple language.
+
+If the environment allows direct repository modification, implement and test the application rather than only describing code.
+
+---
+
+# PART 35: FINAL DELIVERABLES
+
+The final output must include:
+
+1. Complete working DMC Business Operating System.
+2. Detailed system architecture.
+3. End-to-end department workflow.
+4. Database schema and migrations.
+5. Sales and CRM.
+6. B2B client and agent management.
+7. Own and vendor package management.
+8. Itinerary builder.
+9. AI-assisted itinerary import.
+10. Costing and pricing engine.
+11. Quotation and revision management.
+12. Booking confirmation and Tour Code generation.
+13. Sales-to-Operations handover.
+14. Destination-wise operations management.
+15. Supplier and contract management.
+16. Hotel booking.
+17. Transportation and fleet management.
+18. Accounts and finance.
+19. Customer collection management.
+20. Supplier advance and payment management.
+21. Expense and reimbursement management.
+22. Tour execution and movement calendar.
+23. Invoice, receipt, and voucher generation.
+24. Tour closure and profitability.
+25. Automation engine.
+26. WhatsApp and email integration points.
+27. Management dashboards and MIS.
+28. Role-based access control.
+29. AI business assistant.
+30. API integration documentation.
+31. Data migration tools.
+32. Automated tests and results.
+33. Demo dataset and demonstration workflow.
+34. Deployment and environment configuration guide.
+35. Remaining limitations and recommended future phases.
+
+---
+
+# FINAL PRODUCT VISION
+
+Build a platform where every employee works from one connected business record.
+
+Sales should never need to send incomplete information manually to Operations.
+
+Operations should never need to ask Accounts repeatedly whether a supplier advance has been paid.
+
+Accounts should never need to search through multiple Excel sheets to understand a tour's financial position.
+
+Management should never need to collect separate reports from Sales, Operations, and Accounts to understand the actual profitability of a tour.
+
+A single Tour Code should connect every department, every booking, every supplier, every payment, every expense, and every operational activity.
+
+**The ultimate principle:**
+
+"One Enquiry. One Booking. One Tour Code. One Connected Business."
+
+Build the system as a scalable, secure, professional DMC ERP platform that can manage Let's See Tour & Travels' complete business from enquiry generation to final tour profitability.
+
+Start by studying the actual business model, documenting assumptions and unanswered questions, designing the end-to-end workflow, and then implementing the system phase by phase.
+
+Do not stop after building a dashboard or a visually impressive frontend. The complete business workflow, financial accuracy, operational coordination, and data integrity are the real product.

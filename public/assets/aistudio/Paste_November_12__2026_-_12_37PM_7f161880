@@ -1,0 +1,1179 @@
+\# FOLLOW-UP DEVELOPMENT PROMPT: UPDATE THE EXISTING LET'S SEE DMC MANAGEMENT SYSTEM\
+\
+Act as a Senior DMC Business Consultant, Enterprise Software Architect, Full-Stack Developer, Workflow Automation Engineer, and Financial Systems Specialist.\
+\
+We have already discussed and designed the Destination Management System (DMS) for \*\*Let's See Tour & Travels Pvt. Ltd.\*\* This is a follow-up implementation request to update the existing system with the additional business requirements below.\
+\
+\*\*IMPORTANT: Do not build a new application from scratch. Inspect the existing DMC project, understand its current modules, database, workflows, user roles, and implemented features. Extend the existing system without breaking or removing existing functionality.\*\*\
+\
+The objective is to make the system reflect the company's actual working process, particularly the coordination between Sales, Backend/Admin, Operations, and Accounts.\
+\
+Implement the following requirements as integrated workflows, not as isolated screens.\
+\
+\---\
+\
+\# 1. ITINERARY SHARING AND FOLLOW-UP MANAGEMENT\
+\
+This is one of the most important requirements for the Sales team.\
+\
+The Sales team creates or selects an itinerary and sends it to the client through:\
+\
+\- Email.\
+\- WhatsApp.\
+\
+The system must maintain a complete record of every itinerary shared with a client.\
+\
+\### 1.1 Itinerary Sending\
+\
+When Sales sends an itinerary, record:\
+\
+\- Enquiry ID.\
+\- Client/B2B agent details.\
+\- Salesperson ID.\
+\- Salesperson login ID.\
+\- Itinerary ID.\
+\- Itinerary version.\
+\- Destination.\
+\- Travel dates.\
+\- Guest count.\
+\- Quoted amount.\
+\- Sending channel.\
+\- Date and time sent.\
+\- Email or WhatsApp recipient.\
+\- Delivery status, where supported.\
+\- Follow-up date.\
+\- Current enquiry status.\
+\
+The system should preserve the exact itinerary version shared with the client.\
+\
+If Sales subsequently edits the itinerary, the previously shared version must remain available in the communication history.\
+\
+\### 1.2 Follow-up Through Email and WhatsApp\
+\
+Create a dedicated follow-up management system.\
+\
+The Sales team should be able to:\
+\
+\- Send a follow-up email.\
+\- Send a WhatsApp follow-up.\
+\- Schedule a follow-up.\
+\- Record a phone follow-up.\
+\- Add internal remarks.\
+\- View previous communication.\
+\- Reschedule the next follow-up.\
+\- Mark the enquiry as converted, lost, or on hold.\
+\
+Every communication must be linked to the original Enquiry ID.\
+\
+\### 1.3 Configurable Follow-up Days\
+\
+Provide a configurable follow-up schedule.\
+\
+For example:\
+\
+\- First follow-up: 1 day after sending the itinerary.\
+\- Second follow-up: 3 days after the first follow-up.\
+\- Third follow-up: 5 days after the second follow-up.\
+\- Additional follow-ups: Based on company-defined rules.\
+\
+These are example values only. The administrator or authorised manager must be able to configure the actual follow-up intervals.\
+\
+Provide:\
+\
+\- Follow-up interval configuration.\
+\- Follow-up channel configuration.\
+\- Maximum follow-up attempts.\
+\- Working-day or calendar-day settings.\
+\- Follow-up time.\
+\- Quiet hours.\
+\- Stop conditions.\
+\- Salesperson override.\
+\- Follow-up history.\
+\
+\### 1.4 Automatic Follow-up Email\
+\
+This is a required automation.\
+\
+If an itinerary has been sent and the enquiry has not converted within the configured follow-up period, the system should automatically send a follow-up email to the client.\
+\
+Example:\
+\
+1\. Sales sends an itinerary on Monday.\
+2\. The system records the sending date.\
+3\. The configured follow-up is due on Tuesday.\
+4\. The system checks the current enquiry and booking status.\
+5\. If the enquiry is still eligible for follow-up, it sends the configured email.\
+6\. It records the email activity.\
+7\. It schedules the next follow-up according to the rules.\
+\
+\*\*Important safeguards:\*\*\
+\
+\- Never send an automatic follow-up if the enquiry has already converted.\
+\- Stop follow-ups when the client declines, opts out, or the enquiry is marked lost.\
+\- Do not send duplicate follow-ups.\
+\- Do not send an email if a valid address is unavailable.\
+\- Do not send outside configured communication hours.\
+\- If an email fails, record the failure and provide a retry mechanism.\
+\- If a salesperson has already communicated manually, apply the configured rule for resetting or postponing the next follow-up.\
+\- Maintain an audit trail of every automated action.\
+\
+\### 1.5 AI-Based Conversion Status Detection\
+\
+Add AI-assisted enquiry status detection.\
+\
+The system should analyse available communication history and structured business updates to help determine whether an enquiry has:\
+\
+\- Converted.\
+\- Requested a revision.\
+\- Asked for additional information.\
+\- Been postponed.\
+\- Been rejected.\
+\- Gone inactive.\
+\- Remained undecided.\
+\
+For example, if the client replies, "We are confirming the booking. Please share the payment details," the system may suggest a confirmation-related status.\
+\
+If the client says, "We are not interested anymore," the system may suggest Lost.\
+\
+However, AI must not silently mark an enquiry as converted based only on ambiguous email or WhatsApp language.\
+\
+Use this workflow:\
+\
+\*\*AI detects intent → Suggests status → Sales reviews or confirms → System updates the enquiry.\*\*\
+\
+Only allow automatic status changes for clearly defined, explicitly authorised events, such as a verified booking confirmation action within the platform.\
+\
+\### 1.6 Follow-up Dashboard\
+\
+Create a dedicated Sales follow-up dashboard showing:\
+\
+\- Today's follow-ups.\
+\- Overdue follow-ups.\
+\- Upcoming follow-ups.\
+\- Itineraries sent.\
+\- Awaiting client response.\
+\- Revision requested.\
+\- Converted enquiries.\
+\- Lost enquiries.\
+\- Follow-ups sent automatically.\
+\- Follow-ups sent manually.\
+\- Failed email or WhatsApp messages.\
+\
+Provide filters by salesperson, destination, date, enquiry status, and channel.\
+\
+\---\
+\
+\# 2. CLIENT CONFIRMATION AND AUTOMATIC SYSTEM UPDATES\
+\
+The system must track confirmation based on actual communication and authorised user actions.\
+\
+When a client confirms an itinerary:\
+\
+1\. The salesperson records the confirmation or processes a verified confirmation response.\
+2\. The enquiry status changes to Confirmation Received.\
+3\. The system records the confirmation date and source.\
+4\. The salesperson verifies the agreed itinerary and commercial details.\
+5\. The booking moves into the advance collection and confirmation workflow.\
+6\. The same enquiry and itinerary references remain linked to the resulting booking and Tour Code.\
+\
+If the client requests changes, the enquiry must return to the itinerary revision process rather than creating a duplicate enquiry.\
+\
+Maintain the complete history of:\
+\
+\- Original itinerary.\
+\- Revised itineraries.\
+\- Client responses.\
+\- Confirmations.\
+\- Sales remarks.\
+\- Status changes.\
+\
+\---\
+\
+\# 3. BACKEND TEAM: ITINERARY UPLOAD AND MANAGEMENT\
+\
+Create a dedicated Backend/Admin module for itinerary management.\
+\
+The Backend team must be able to upload and maintain the master itinerary library.\
+\
+\### Supported uploads\
+\
+Where technically supported:\
+\
+\- PDF.\
+\- DOCX.\
+\- XLSX.\
+\- CSV.\
+\- Images.\
+\- Manually created itineraries.\
+\
+\### Itinerary master information\
+\
+\- Itinerary ID.\
+\- Package name.\
+\- Destination.\
+\- Country/state.\
+\- Duration.\
+\- Number of nights.\
+\- Day-wise schedule.\
+\- Hotel information.\
+\- Transport information.\
+\- Sightseeing.\
+\- Activities.\
+\- Meals.\
+\- Inclusions.\
+\- Exclusions.\
+\- Terms and conditions.\
+\- Package category.\
+\- Internal notes.\
+\- Version.\
+\- Active/inactive status.\
+\
+\### Backend capabilities\
+\
+\- Upload new itineraries.\
+\- Edit existing itineraries.\
+\- Replace outdated documents.\
+\- Maintain itinerary versions.\
+\- Duplicate itineraries.\
+\- Categorise by destination.\
+\- Categorise by package type.\
+\- Search and filter.\
+\- Archive outdated itineraries.\
+\- Upload photographs.\
+\- Maintain internal information.\
+\- Configure which itineraries are available to Sales.\
+\
+The Backend team should be able to maintain a central itinerary library that Sales can use directly.\
+\
+\### Important versioning rule\
+\
+When an itinerary has already been used for a confirmed booking, changing the master itinerary must not automatically change that existing booking.\
+\
+Every confirmed tour must preserve its approved itinerary snapshot.\
+\
+\---\
+\
+\# 4. SALES TEAM: ITINERARY CUSTOMISATION\
+\
+Sales must have an easy-to-use itinerary customisation interface.\
+\
+Sales should be able to select an existing itinerary from the Backend library and customise it according to the client's requirements.\
+\
+\### Customisation capabilities\
+\
+\- Change travel dates.\
+\- Change guest count.\
+\- Change the number of rooms.\
+\- Change hotel preference.\
+\- Change sightseeing.\
+\- Add sightseeing.\
+\- Remove sightseeing.\
+\- Change activity selection.\
+\- Add optional activities.\
+\- Modify day-wise schedules.\
+\- Change pickup/drop requirements.\
+\- Add client-specific instructions.\
+\- Add special requests.\
+\- Add internal notes.\
+\
+The interface should allow the salesperson to customise an itinerary without modifying the original master itinerary.\
+\
+\### Important rules\
+\
+1\. The original master itinerary must remain unchanged.\
+2\. Sales customisation should create a separate customer-specific itinerary version.\
+3\. Every revision must have a version number.\
+4\. Previous versions must remain accessible.\
+5\. Sales should not directly modify supplier rates or approved financial prices.\
+6\. Changes that affect costing must trigger a costing recalculation or an Accounts review, depending on the change.\
+7\. The system must clearly distinguish internal notes from information shared with clients.\
+\
+\---\
+\
+\# 5. HOTEL BOOKING REQUIREMENTS\
+\
+There is an important distinction between selecting a hotel during Sales and actually confirming the hotel booking.\
+\
+\### Sales team responsibilities\
+\
+Sales should be able to:\
+\
+\- View available hotels from the approved backend hotel library.\
+\- Select preferred hotels for an itinerary.\
+\- Specify hotel category.\
+\- Specify room type.\
+\- Specify room count.\
+\- Specify meal plan.\
+\- Enter check-in and check-out dates.\
+\- Add client preferences.\
+\- Request hotel availability and costing.\
+\- View booking status.\
+\- Communicate hotel preferences to Operations.\
+\
+Sales must not independently confirm an external hotel reservation unless specifically authorised.\
+\
+\### Operations team responsibilities\
+\
+Operations must:\
+\
+\- Check availability.\
+\- Contact the hotel or supplier.\
+\- Confirm rates and room availability.\
+\- Create the actual booking.\
+\- Upload confirmation.\
+\- Update reservation status.\
+\- Record cancellation policy.\
+\- Record advance and balance requirements.\
+\- Update booking details.\
+\
+All hotel reservations must be linked to the Tour Code.\
+\
+\### Backend/Admin responsibilities\
+\
+Maintain the central hotel master:\
+\
+\- Hotel name.\
+\- Destination.\
+\- Address.\
+\- Contact details.\
+\- Room categories.\
+\- Meal plans.\
+\- Contract rates.\
+\- Rate validity.\
+\- Seasonal rates.\
+\- Tax information.\
+\- Cancellation policy.\
+\- Supplier details.\
+\- Documents.\
+\- Active/inactive status.\
+\
+\---\
+\
+\# 6. COSTING AND RATE MANAGEMENT\
+\
+The system must have clear ownership of financial pricing.\
+\
+The Backend team manages the master supplier and service catalogue, while the Accounts team controls financial price updates and approvals.\
+\
+\### Backend team can maintain:\
+\
+\- Hotel master records.\
+\- Transport master records.\
+\- Supplier details.\
+\- Hotel categories.\
+\- Vehicle categories.\
+\- Service descriptions.\
+\- Rate-related documents.\
+\- Supplier contract information.\
+\- Destination information.\
+\- Operational metadata.\
+\
+\### Accounts team controls:\
+\
+\- Approved hotel cost rates.\
+\- Approved transportation cost rates.\
+\- Supplier cost amendments.\
+\- Financial costing adjustments.\
+\- Package financial calculations.\
+\- Tax settings.\
+\- Selling price approvals.\
+\- Discounts and financial exceptions.\
+\- Final approved costing.\
+\
+\*\*Important:\*\* Do not allow Sales or Operations to silently change approved financial rates.\
+\
+\### Costing workflow\
+\
+1\. Sales selects the hotel and transport requirements.\
+2\. The system fetches the approved available rate information.\
+3\. If rates are unavailable or outdated, a costing request is created.\
+4\. Accounts reviews and updates or approves the financial rates.\
+5\. The revised costing becomes available to authorised users.\
+6\. Sales uses the approved costing to prepare the client quotation.\
+7\. Operations uses the approved commercial and service details for bookings.\
+\
+Maintain:\
+\
+\- Old price.\
+\- New price.\
+\- Reason for change.\
+\- Changed by.\
+\- Approved by.\
+\- Date.\
+\- Related supplier.\
+\- Related destination.\
+\- Related package.\
+\- Related Tour Code, where applicable.\
+\
+Every financial change must be auditable.\
+\
+\---\
+\
+\# 7. TRANSPORTATION MANAGEMENT: OWN VEHICLES AND EXTERNAL VENDORS\
+\
+Transportation sourcing must follow destination-specific business rules.\
+\
+\### 7.1 Northeast India\
+\
+For Northeast India destinations, the default transport sourcing policy is \*\*company-owned vehicles\*\*.\
+\
+The system should prioritise the company's own fleet.\
+\
+It must:\
+\
+\- Show available company vehicles.\
+\- Check vehicle availability.\
+\- Check overlapping assignments.\
+\- Assign drivers.\
+\- Allocate the vehicle to the Tour Code.\
+\- Record internal vehicle operating costs.\
+\- Maintain vehicle movement and usage records.\
+\
+External transportation vendors should not be selectable by default for Northeast India unless an authorised administrator or manager enables an exception.\
+\
+\### 7.2 Outside Northeast India\
+\
+For destinations outside Northeast India, external transport vendor booking should be permitted.\
+\
+Operations should be able to:\
+\
+\- Select an approved transport supplier.\
+\- Select vehicle type.\
+\- Request supplier availability.\
+\- Record the supplier's quotation.\
+\- Record agreed cost.\
+\- Confirm the booking.\
+\- Record advance required.\
+\- Record balance payable.\
+\- Upload booking confirmation.\
+\- Update supplier payment status.\
+\
+The system must allow administrators to configure destination-wise sourcing rules rather than hardcoding destination names into the application.\
+\
+\### 7.3 Own Vehicle Versus Vendor Vehicle\
+\
+The system must distinguish:\
+\
+\*\*Own vehicle\*\*\
+\- Internal fleet allocation.\
+\- Internal operating cost.\
+\- Driver assignment.\
+\- No external supplier advance.\
+\- No vendor payment request.\
+\
+\*\*External vehicle\*\*\
+\- Supplier booking.\
+\- Supplier confirmation.\
+\- Supplier payable.\
+\- Advance requirement.\
+\- Balance payment.\
+\- Supplier ledger.\
+\
+Do not treat own vehicle usage as zero cost. It must have an internal cost allocation.\
+\
+\---\
+\
+\# 8. SALES CONFIRMATION AND AUTOMATIC OPERATIONS HANDOVER\
+\
+After the Sales team confirms the booking and completes the required handover information, the system must automatically route the tour to the Operations team.\
+\
+\### Required workflow\
+\
+1\. Sales confirms the client booking.\
+2\. Sales records the confirmed itinerary version.\
+3\. Sales confirms the guest count and travel dates.\
+4\. Sales records the client arrival and departure details.\
+5\. Sales records any special requests.\
+6\. Sales submits the booking for operational handover.\
+7\. The system validates the required fields.\
+8\. The system generates or links the Tour Code according to the existing booking workflow.\
+9\. The system identifies the destination.\
+10\. The system assigns the tour to the appropriate destination operations team.\
+11\. Operations receives a notification.\
+12\. Operations reviews and accepts the handover.\
+13\. Operations begins hotel, transportation, and activity booking.\
+\
+\### Handover statuses\
+\
+\- Draft.\
+\- Ready for Handover.\
+\- Submitted.\
+\- Pending Operations Acceptance.\
+\- Accepted.\
+\- Clarification Required.\
+\- Returned to Sales.\
+\- Operational Planning.\
+\- Booking in Progress.\
+\- Operationally Confirmed.\
+\
+\### Operations response\
+\
+Operations must be able to respond through the system.\
+\
+Examples:\
+\
+\- Handover accepted.\
+\- Hotel booking in progress.\
+\- Hotel confirmed.\
+\- Transport assigned.\
+\- Supplier confirmation pending.\
+\- Guest information missing.\
+\- Additional clarification required.\
+\- Booking completed.\
+\
+The Sales team must receive notifications and see these updates in the same enquiry/booking record.\
+\
+Sales should not need to call Operations repeatedly to know the booking status.\
+\
+\---\
+\
+\# 9. ACCOUNTS WORKFLOW: PROFORMA INVOICE, TOKEN AMOUNT AND FINAL CONFIRMATION\
+\
+Implement a controlled financial confirmation workflow.\
+\
+The Sales team can initiate the payment request, but Accounts must verify payment and provide final booking confirmation.\
+\
+\### Stage 1: Proforma invoice by Sales\
+\
+After the client agrees to the itinerary and commercial terms, Sales should be able to generate a proforma invoice for the required token or advance amount.\
+\
+The proforma invoice must contain:\
+\
+\- Enquiry ID.\
+\- Client/B2B agent details.\
+\- Tour Code or provisional booking reference.\
+\- Itinerary reference.\
+\- Package details.\
+\- Total agreed selling price.\
+\- Token amount payable.\
+\- Payment due date.\
+\- Payment instructions.\
+\- Applicable GST.\
+\- Terms and conditions.\
+\
+Use the configured company document numbering system.\
+\
+\### Stage 2: Client payment\
+\
+The client pays the token amount.\
+\
+Sales may upload payment proof or record the payment information.\
+\
+However, uploading a screenshot or entering a transaction reference must not automatically mark the payment as received.\
+\
+\### Stage 3: Accounts verification\
+\
+Accounts must receive a payment verification request.\
+\
+Accounts can:\
+\
+\- Verify payment against the bank statement or authorised payment gateway.\
+\- Confirm payment received.\
+\- Reject payment proof.\
+\- Request clarification.\
+\- Record the received amount.\
+\- Record transaction reference.\
+\- Record payment mode.\
+\- Record bank account.\
+\- Record payment date.\
+\- Record verification remarks.\
+\
+\### Stage 4: Sales notification\
+\
+Once Accounts verifies the payment, the system automatically notifies Sales.\
+\
+Sales should see:\
+\
+\- Payment verified.\
+\- Amount received.\
+\- Remaining amount.\
+\- Verification date.\
+\- Accounts remarks.\
+\
+\### Stage 5: Final booking confirmation\
+\
+Accounts has the authority to provide the financial confirmation required for final booking confirmation.\
+\
+The final confirmation workflow must be:\
+\
+Client confirms → Sales creates proforma invoice → Client makes payment → Accounts verifies payment → System updates payment status → Sales and Operations are notified → Final booking confirmation is recorded.\
+\
+If an approved credit arrangement or authorised exception exists, allow an alternative approval path.\
+\
+\### Important rules\
+\
+\- Sales cannot mark a payment as verified.\
+\- Operations cannot mark a payment as verified.\
+\- Only authorised Accounts users can verify financial receipts.\
+\- A payment proof upload is not the same as an actual bank receipt.\
+\- A booking must not be marked financially confirmed without the required approval.\
+\- Every status change must be recorded in the audit log.\
+\
+\---\
+\
+\# 10. GST CONFIGURATION\
+\
+The current business requirement provided by the client is:\
+\
+\*\*GST: 5%\*\*\
+\
+Implement 5% as the initial configured GST rate for the relevant tour/package billing scenario.\
+\
+However, do not hardcode 5% permanently across all financial transactions.\
+\
+Create a configurable tax settings module with:\
+\
+\- Tax name.\
+\- Tax rate.\
+\- Applicable service/category.\
+\- Effective date.\
+\- Tax calculation method.\
+\- Tax-inclusive or tax-exclusive pricing.\
+\- CGST/SGST/IGST treatment where applicable.\
+\- Exemptions or special cases.\
+\- Approval and change history.\
+\
+The Accounts/Admin role should control tax settings.\
+\
+Before production deployment, require Accounts to verify the correct GST classification and applicability for each service and transaction with its tax adviser. Do not automatically apply the same rate to every hotel, transport, package, or international transaction without checking the applicable rules.\
+\
+All quotations, proforma invoices, invoices, and financial reports must use the approved tax configuration.\
+\
+\---\
+\
+\# 11. ID-WISE SALES REPORTING AND DOWNLOADS\
+\
+Create detailed individual salesperson reporting.\
+\
+Every employee must have a unique Employee ID and login ID.\
+\
+All sales activity must be linked to the logged-in user.\
+\
+\### Sales report fields\
+\
+\- Employee ID.\
+\- Employee name.\
+\- Login ID.\
+\- Department.\
+\- Enquiry ID.\
+\- Enquiry date.\
+\- Lead source.\
+\- Destination.\
+\- Client/B2B agent.\
+\- Itinerary ID.\
+\- Itinerary sent date.\
+\- Sending channel.\
+\- Number of follow-ups.\
+\- Last follow-up date.\
+\- Next follow-up date.\
+\- Quotation amount.\
+\- Booking status.\
+\- Conversion status.\
+\- Tour Code.\
+\- Confirmed selling price.\
+\- Advance status.\
+\- Payment verification status.\
+\- Lost reason, if applicable.\
+\
+\### Report filters\
+\
+\- Individual salesperson.\
+\- Team.\
+\- Department.\
+\- Destination.\
+\- Date range.\
+\- Lead source.\
+\- Conversion status.\
+\- Booking status.\
+\- Follow-up status.\
+\
+\### Download options\
+\
+Allow authorised users to download:\
+\
+\- Excel.\
+\- CSV.\
+\- PDF.\
+\
+\### Login ID-based reporting\
+\
+Each Sales employee should have access to their own report.\
+\
+Sales Managers should be able to view reports for their assigned team.\
+\
+Management should be able to view all authorised sales reports.\
+\
+The downloaded report should clearly identify the report owner, employee ID, login ID, date range, and generation timestamp.\
+\
+Do not allow employees to change the employee ID or login ID associated with existing sales records.\
+\
+All reporting must be generated from actual database records.\
+\
+\---\
+\
+\# 12. ARRIVAL AND DEPARTURE MANAGEMENT\
+\
+The system must capture client/traveller arrival and departure details.\
+\
+Sales should provide these details during booking confirmation or handover.\
+\
+Fields:\
+\
+\- Tour Code.\
+\- Guest name.\
+\- Arrival date.\
+\- Arrival time.\
+\- Arrival airport/railway station/location.\
+\- Arrival flight/train number, if available.\
+\- Pickup location.\
+\- Departure date.\
+\- Departure time.\
+\- Departure airport/railway station/location.\
+\- Departure flight/train number, if available.\
+\- Drop location.\
+\- Number of guests.\
+\- Luggage or special transport requirements.\
+\- Emergency contact.\
+\- Special instructions.\
+\
+Operations must be able to view and update operational pickup/drop details.\
+\
+The system should create relevant tasks and notifications for:\
+\
+\- Pickup arrangements.\
+\- Drop arrangements.\
+\- Driver assignment.\
+\- Vehicle allocation.\
+\- Guest coordination.\
+\
+If the arrival or departure details change, all relevant authorised teams must be notified.\
+\
+Maintain a history of changes.\
+\
+\---\
+\
+\# 13. INTERNAL TEAM COMMUNICATION\
+\
+Create a central internal communication system linked to enquiries and Tour Codes.\
+\
+The Sales team should be able to communicate with Operations and Accounts directly through the application.\
+\
+\### Communication features\
+\
+\- Internal comments.\
+\- Team messages.\
+\- Tour-specific discussion.\
+\- Sales-to-Operations messages.\
+\- Sales-to-Accounts messages.\
+\- Operations-to-Accounts messages.\
+\- File attachments.\
+\- Mentions using @employee.\
+\- Notifications.\
+\- Read/unread status.\
+\- Message timestamps.\
+\- Sender information.\
+\- Activity history.\
+\
+\### Example: Sales to Operations\
+\
+Sales posts:\
+\
+"Client arriving in Guwahati on 18 December at 10:30 AM. Please arrange airport pickup for four guests."\
+\
+Operations receives the message against the relevant Tour Code.\
+\
+Operations replies:\
+\
+"Pickup vehicle assigned. Driver details will be updated before arrival."\
+\
+Sales receives a notification and can see the response.\
+\
+\### Example: Sales to Accounts\
+\
+Sales posts:\
+\
+"Client has shared the token payment proof. Please verify the amount and update the payment status."\
+\
+Accounts receives the request and updates the payment verification workflow.\
+\
+\### Important communication rules\
+\
+\- Every message must be linked to an enquiry, booking, Tour Code, payment request, or relevant task.\
+\- Maintain communication history.\
+\- Employees should only see conversations they are authorised to access.\
+\- Financial verification must still happen through the Accounts workflow, not merely through a chat message.\
+\- Important operational instructions must be convertible into assigned tasks.\
+\- Do not allow a chat message to silently change booking or payment status.\
+\
+\---\
+\
+\# 14. ADMIN PANEL: MASTER DATA MANAGEMENT\
+\
+Create a central Admin/Backend management area.\
+\
+The administrator should be able to manage:\
+\
+\### Itineraries\
+\- Upload.\
+\- Edit.\
+\- Version.\
+\- Archive.\
+\- Categorise.\
+\- Assign access permissions.\
+\
+\### Hotels\
+\- Add hotel.\
+\- Edit hotel.\
+\- Manage destination.\
+\- Manage room categories.\
+\- Upload rate sheets.\
+\- Maintain contracts.\
+\- Maintain supplier contacts.\
+\- Activate/deactivate.\
+\
+\### Transportation\
+\- Add vehicle categories.\
+\- Manage own fleet.\
+\- Manage external transport vendors.\
+\- Manage destination sourcing rules.\
+\- Upload rate sheets.\
+\- Maintain contract information.\
+\
+\### Suppliers\
+\- Add supplier.\
+\- Edit supplier.\
+\- Assign destination.\
+\- Assign service category.\
+\- Upload documents.\
+\- Maintain contacts.\
+\- Maintain terms.\
+\
+\### Other master data\
+\- Destinations.\
+\- Activities.\
+\- Guides.\
+\- Meal plans.\
+\- Room categories.\
+\- Package types.\
+\- Tax configuration.\
+\- Follow-up rules.\
+\- Communication templates.\
+\- Approval rules.\
+\- Employee and department management.\
+\
+\### Access control\
+\
+Backend/Admin users should be able to manage master data according to their permissions.\
+\
+Financial rate changes must remain subject to Accounts-controlled financial permissions and approval.\
+\
+\---\
+\
+\# 15. UPDATED DEPARTMENT RESPONSIBILITIES\
+\
+Implement the following responsibility matrix.\
+\
+\| Activity | Sales | Backend/Admin | Operations | Accounts |\
+\|---|---|---|---|---|\
+\| Create enquiry | Yes | No | No | No |\
+\| Send itinerary | Yes | No | No | No |\
+\| Upload master itinerary | No | Yes | No | No |\
+\| Customise client itinerary | Yes | Manage master | Operational input | Cost approval if needed |\
+\| Follow-up | Yes/Automated | Configure rules | No | No |\
+\| Manage hotel master | No | Yes | View/use | Financial rate approval |\
+\| Select hotel preference | Yes | Maintain master | Yes | No |\
+\| Confirm hotel booking | No | No | Yes | Payment processing |\
+\| Manage transport master | No | Yes | Use | Financial rate approval |\
+\| Allocate own vehicle | No | Fleet master | Yes | No |\
+\| Confirm hired transport | No | No | Yes | Payment processing |\
+\| Update supplier cost | No | Maintain source documents | Request/update booking details | Approve financial amount |\
+\| Prepare proforma invoice | Yes | Template management | No | Financial review if required |\
+\| Verify client payment | No | No | No | Yes |\
+\| Final financial booking confirmation | No | No | No | Yes |\
+\| Submit operational handover | Yes | No | Accept | View |\
+\| Manage tour execution | No | No | Yes | View |\
+\| Supplier payment | No | No | Request/confirm service | Yes |\
+\| Financial reconciliation | No | No | Provide actual expenses | Yes |\
+\| Download individual sales report | Own records | No | No | No |\
+\| View team sales report | Manager permissions | No | No | No |\
+\
+Use this as the default responsibility model. Make permissions configurable, but do not allow configuration to undermine financial controls or auditability.\
+\
+\---\
+\
+\# 16. NOTIFICATIONS AND WORKFLOW AUTOMATION\
+\
+Implement notifications for the following events.\
+\
+\| Event | Notification |\
+\|---|---|\
+\| New enquiry assigned | Salesperson |\
+\| Itinerary sent | Salesperson activity history |\
+\| Follow-up due | Salesperson |\
+\| Automatic follow-up sent | Salesperson |\
+\| Client replies | Assigned Salesperson |\
+\| AI detects possible conversion | Salesperson |\
+\| Client requests revision | Salesperson |\
+\| Booking confirmation submitted | Accounts and relevant team |\
+\| Proforma invoice created | Client and authorised internal users |\
+\| Payment proof uploaded | Accounts |\
+\| Payment verified | Sales and Operations |\
+\| Payment rejected | Sales |\
+\| Operational handover submitted | Destination Operations |\
+\| Handover clarification requested | Sales |\
+\| Hotel booking confirmed | Sales and relevant Operations users |\
+\| Transport assigned | Relevant Operations users |\
+\| Supplier advance requested | Accounts |\
+\| Supplier payment processed | Operations |\
+\| Arrival/departure changed | Sales and Operations |\
+\| Tour completed | Accounts and Management |\
+\| Tour closure pending | Responsible team |\
+\
+Support in-app notifications, email, and WhatsApp where configured.\
+\
+Each notification must be linked to the relevant record.\
+\
+\---\
+\
+\# 17. UPDATED DATABASE AND TECHNICAL REQUIREMENTS\
+\
+Inspect the current database before creating new tables.\
+\
+Extend the existing schema as required.\
+\
+Evaluate the need for:\
+\
+\- \`ItineraryMaster\`\
+\- \`ItineraryVersion\`\
+\- \`ClientItinerary\`\
+\- \`ItineraryRevision\`\
+\- \`ItineraryShareHistory\`\
+\- \`FollowUpSchedule\`\
+\- \`FollowUpActivity\`\
+\- \`CommunicationLog\`\
+\- \`EmailTemplate\`\
+\- \`WhatsAppTemplate\`\
+\- \`AIIntentDetection\`\
+\- \`HotelMaster\`\
+\- \`HotelRateVersion\`\
+\- \`TransportMaster\`\
+\- \`FleetVehicle\`\
+\- \`TransportRateVersion\`\
+\- \`DestinationSourcingRule\`\
+\- \`SalesHandover\`\
+\- \`HandoverStatusHistory\`\
+\- \`HotelBooking\`\
+\- \`TransportBooking\`\
+\- \`ArrivalDeparture\`\
+\- \`ProformaInvoice\`\
+\- \`CustomerPayment\`\
+\- \`PaymentVerification\`\
+\- \`TaxConfiguration\`\
+\- \`InternalMessage\`\
+\- \`MessageAttachment\`\
+\- \`EmployeeSalesReport\`\
+\- \`Notification\`\
+\- \`ApprovalHistory\`\
+\- \`AuditLog\`\
+\
+Adapt the schema to existing naming conventions and avoid redundant entities.\
+\
+Ensure proper foreign keys and relationships to existing Enquiry, Booking, Tour, Tour Code, Client, Supplier, and Employee records.\
+\
+\### Critical technical rules\
+\
+\- Use the existing Tour Code as the central reference for confirmed tours.\
+\- Maintain separate references for enquiry, itinerary, quotation, booking, and payment.\
+\- Preserve historical versions.\
+\- Use transactions for important financial updates.\
+\- Use idempotency for automated emails and notifications.\
+\- Use background jobs for scheduled follow-ups.\
+\- Track failed jobs and provide retry mechanisms.\
+\- Maintain proper permission checks on the backend.\
+\- Maintain audit history for financial changes.\
+\- Do not expose external API keys in frontend code.\
+\
+\---\
+\
+\# 18. EXTERNAL INTEGRATIONS TO RESEARCH\
+\
+Research current official documentation and recommend the most appropriate integration options for:\
+\
+1\. WhatsApp Business Platform for itinerary sharing and follow-ups.\
+2\. Gmail API or Microsoft Graph for receiving and sending emails.\
+3\. AI email classification and conversion-intent detection.\
+4\. Email delivery and scheduling.\
+5\. PDF generation for itineraries and proforma invoices.\
+6\. Background job scheduling.\
+7\. Payment gateway integration, if required.\
+\
+For each integration, document:\
+\
+\- Provider.\
+\- Official documentation.\
+\- Required API keys or credentials.\
+\- Cost, if verified.\
+\- Technical limitations.\
+\- Setup steps.\
+\- Whether it is mandatory or optional.\
+\
+Do not invent API endpoints, capabilities, or pricing.\
+\
+If an integration is unavailable, implement the relevant interface and a clear configuration status. Do not pretend that messages are sent or received when no integration is configured.\
+\
+\---\
+\
+\# 19. END-TO-END TESTING SCENARIOS\
+\
+Before completing implementation, test these exact workflows.\
+\
+\### Test 1: Itinerary and follow-up\
+\
+1\. Sales creates an enquiry.\
+2\. Selects an itinerary from the Backend library.\
+3\. Customises it.\
+4\. Sends it through email.\
+5\. System schedules follow-up.\
+6\. Client does not respond.\
+7\. Automatic follow-up email is sent on the configured date.\
+8\. Activity is visible in the enquiry timeline.\
+\
+\### Test 2: Client converts before follow-up\
+\
+1\. Itinerary is sent.\
+2\. A follow-up is scheduled.\
+3\. Client confirms before the follow-up date.\
+4\. Sales records confirmation.\
+5\. System stops all scheduled follow-ups.\
+6\. No unwanted automatic email is sent.\
+\
+\### Test 3: Itinerary revision\
+\
+1\. Sales selects an existing itinerary.\
+2\. Changes sightseeing.\
+3\. Saves a new version.\
+4\. Sends the revised itinerary.\
+5\. Original version remains available.\
+6\. Costing impact is reviewed where applicable.\
+\
+\### Test 4: Backend itinerary update\
+\
+1\. Backend uploads a new itinerary.\
+2\. Adds destination and package information.\
+3\. Publishes it to the Sales library.\
+4\. Sales can search and select it.\
+5\. Existing confirmed tours remain unchanged.\
+\
+\### Test 5: Northeast own transport\
+\
+1\. Sales selects a Northeast package.\
+2\. Transport is required.\
+3\. Operations sees company-owned vehicle options.\
+4\. Operations assigns an available vehicle.\
+5\. Internal vehicle cost is recorded.\
+6\. No external supplier advance is created.\
+\
+\### Test 6: Outside Northeast vendor transport\
+\
+1\. Operations selects an external transport vendor.\
+2\. Records agreed cost.\
+3\. Confirms the booking.\
+4\. Supplier payable is created.\
+5\. Accounts receives the payment request.\
+\
+\### Test 7: Accounts verification\
+\
+1\. Sales generates a proforma invoice.\
+2\. Client pays the token amount.\
+3\. Sales uploads payment proof.\
+4\. Accounts receives a verification request.\
+5\. Accounts verifies the bank receipt.\
+6\. Sales receives a notification.\
+7\. Booking status updates.\
+8\. Final financial confirmation is recorded.\
+\
+\### Test 8: Destination operations handover\
+\
+1\. Sales completes booking information.\
+2\. Submits handover.\
+3\. System routes it to the appropriate destination team.\
+4\. Operations accepts.\
+5\. Operations updates hotel and transport bookings.\
+6\. Sales sees all updates.\
+\
+\### Test 9: Internal communication\
+\
+1\. Sales sends arrival information against the Tour Code.\
+2\. Operations receives a notification.\
+3\. Operations replies with the pickup arrangement.\
+4\. Sales sees the response.\
+5\. The communication remains in the Tour Code timeline.\
+\
+\### Test 10: ID-wise sales report\
+\
+1\. Salesperson logs in.\
+2\. Downloads their own sales report.\
+3\. Report includes their employee ID and login ID.\
+4\. Sales Manager views team-wise reports.\
+5\. Management views authorised organisation-wide reports.\
+\
+\---\
+\
+\# 20. IMPLEMENTATION RULES\
+\
+Before coding:\
+\
+1\. Inspect the current repository.\
+2\. Identify which of these requirements already exist.\
+3\. Identify incomplete or non-functional workflows.\
+4\. Review current user roles and permission logic.\
+5\. Review existing database relationships.\
+6\. Identify existing email, WhatsApp, and notification integrations.\
+7\. Prepare an implementation impact analysis.\
+8\. Prepare the database migration plan.\
+9\. Identify potential conflicts with existing business logic.\
+\
+Then implement the updates incrementally.\
+\
+Do not:\
+\
+\- Rebuild the entire application unnecessarily.\
+\- Break the existing CRM or itinerary modules.\
+\- Replace the existing Tour Code architecture.\
+\- Duplicate existing tables or functionality.\
+\- Hardcode follow-up days.\
+\- Allow Sales to verify Accounts payments.\
+\- Allow Operations to edit financial rates without approval.\
+\- Create duplicate bookings from repeated notifications.\
+\- Send follow-ups after conversion.\
+\- Change confirmed itinerary versions when master data changes.\
+\- Treat uploaded payment proof as verified payment.\
+\- Treat AI-generated conversion intent as an actual confirmed booking.\
+\
+Run frontend builds, backend tests, database migration validation, and end-to-end workflow tests.\
+\
+Provide complete code changes with exact file paths in code comments if showing code. Explain the changes in simple language.\
+\
+\---\
+\
+\# FINAL EXPECTATION\
+\
+The updated system must support this complete business workflow:\
+\
+\*\*Sales receives enquiry → Selects or customises itinerary → Sends through Email/WhatsApp → Follow-ups happen automatically according to configurable days → Client confirms → Sales generates proforma invoice → Client pays token amount → Accounts verifies payment → Sales receives notification → Final financial confirmation → System routes the same booking to destination Operations → Operations books hotels and transportation → Accounts processes supplier payments → Arrival and departure arrangements are coordinated → Tour is executed → Financial reconciliation and tour closure.\*\*\
+\
+The Backend team maintains the master itineraries, hotel information, transportation information, and other master data.\
+\
+Sales owns the client relationship, itinerary sharing, customisation, follow-ups, and booking handover.\
+\
+Operations owns actual hotel and transportation bookings, destination execution, and operational updates.\
+\
+Accounts owns financial rate approvals, payment verification, supplier payments, and financial confirmation.\
+\
+Management must be able to monitor every stage.\
+\
+\*\*The central objective is that no department should have to maintain a separate Excel sheet or depend on repeated phone calls to understand the current status of a tour.\*\*\
+\
+One Enquiry ID, one connected booking, one Tour Code, and one shared source of truth across the entire organisation.\
+\
+Implement these requirements as updates to the existing DMC system while preserving all previously completed functionality.\
